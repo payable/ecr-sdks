@@ -75,7 +75,7 @@ Example response:
 
 #### Checking the terminal status
 
-Browser the terminal's IP address with 8080 port number in the same network to ensure the terminal status. 
+Browse the terminal's IP address with 8080 port number in the same network to ensure the terminal status. 
 
 Example: `http://192.168.2.204:8080`
 
