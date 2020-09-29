@@ -82,6 +82,8 @@ If the device is online with the local network, the URL will respond as below or
 
 ![](https://i.imgur.com/Efjwaol.png)
 
+<hr>
+
 #### Java SDK Integration 
 
 1. Copy or include the ECR JAR library [ecr-1.0.jar](https://github.com/payable/ecr-sdks/raw/master/maven/ecr-test/lib/ecr-1.0.jar) to the Java libs folder.
@@ -137,9 +139,9 @@ String jsonRequest = request.toJson();
 ecrTerminal.send(jsonRequest);
 ```
 
-You can expect the reponse at 'onMessage' method of the listener.
+You can expect the reponse at `onMessage` method of the listener.
 
-Refer to the below demonstration to know more about connection and payment requests.
+> Refer to the below demonstration to know more about connection and payment requests.
 
 ```java
 import java.io.IOException;
