@@ -1,4 +1,5 @@
 
+  
 ### PAYable ECR SDKs - ECR Integration
 
 ![](https://i.imgur.com/ERpCDa7.png)
@@ -9,7 +10,7 @@
 
 ### Initialization 
 
-* Make sure the ECR payment service is running on the terminal as below. <br/>
+* Make sure the ECR payment service is running on the terminal as below. <br/><br/>
 ![](https://i.imgur.com/pka7PqI.png)
 
 The connection between the terminal and host system will be established using WebSocket which is running inside the ECR application. 
@@ -82,8 +83,12 @@ Example: `http://192.168.2.204:8080`
 
 If the device is online with the local network, the URL will respond as below or else it won't respond anything since the terminal is offline.
 
-*Terminal Serial: PP35271812000161  
-ECR Version: 1.0
-PAYable Status: READY*
+*Terminal Serial: PP35271812000161*
+*ECR Version: 1.0*
+*PAYable Status: READY*
 
 *- PAYable ECR SDKs Integration*
+
+#### Java SDK Integration 
+
+Copy the 
