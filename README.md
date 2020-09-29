@@ -86,7 +86,7 @@ If the device is online with the local network, the URL will respond as below or
 
 1. Copy or include the ECR JAR library [ecr-1.0.jar](https://github.com/payable/ecr-sdks/raw/master/maven/ecr-test/lib/ecr-1.0.jar) to the Java libs folder.
 
-```
+```java
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
@@ -97,10 +97,6 @@ import org.payable.ecr.ECRTerminal;
 import org.payable.ecr.PAYableRequest;
 import org.payable.ecr.PAYableResponse;
 
-/**
- * PAYable SDK Demo
- *
- */
 class Demo {
 
     ECRTerminal ecrTerminal;
