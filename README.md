@@ -1,5 +1,3 @@
-
-  
 ![](https://i.imgur.com/ERpCDa7.png)
 ### PAYable ECR SDKs - ECR Integration
 ECR SDKs - https://github.com/payable/ecr-sdks
@@ -82,11 +80,9 @@ Example: `http://192.168.2.204:8080`
 
 If the device is online with the local network, the URL will respond as below or else it won't respond anything since the terminal is offline.
 
-*Terminal Serial: PP35271812000161*
-*ECR Version: 1.0*
-*PAYable Status: READY*
-
-*- PAYable ECR SDKs Integration*
+*Terminal Serial: PP35271812000161*<br/>
+*ECR Version: 1.0*<br/>
+*PAYable Status: READY*<br/>
 
 #### Java SDK Integration 
 
@@ -184,3 +180,5 @@ class Demo {
     }
 }
 ```
+
+*- PAYable ECR SDKs Integration*
