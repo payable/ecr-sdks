@@ -86,6 +86,27 @@ If the device is online with the local network, the URL will respond as below or
 
 1. Copy or include the ECR JAR library [ecr-1.0.jar](https://github.com/payable/ecr-sdks/raw/master/maven/ecr-test/lib/ecr-1.0.jar) to the Java libs folder.
 
+* After the connection is successfully established you can start to send the sale request to terminal.
+
+* Construct the sale request object
+```java
+PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, 252, 256.00, PAYableRequest.METHOD_CARD);
+```
+
+* Convert to JSON
+```java
+String jsonRequest = request.toJson();
+```
+
+* Send to terminal
+```java
+ecrTerminal.send(jsonRequest);
+```
+
+* Expect the reponse at 'onMessage' method
+
+Refer to the below demonstration to know more about connection and payment requests.
+
 ```java
 import java.io.IOException;
 import java.net.URISyntaxException;
