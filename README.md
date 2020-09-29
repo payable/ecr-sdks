@@ -3,9 +3,8 @@
 
 ![](https://i.imgur.com/ERpCDa7.png)
 
-ECR SDKs - https://github.com/payable/ecr-sdks <br/>
+[![](https://img.shields.io/badge/build-passing-brightgreen)]() ECR SDKs - https://github.com/payable/ecr-sdks
 
-[![](https://img.shields.io/badge/build-passing-brightgreen)]()
 <hr>
 
 ### Initialization 
