@@ -4,7 +4,7 @@
 ECR SDKs - https://github.com/payable/ecr-sdks
 <hr>
 
-#### Integration 
+### Integration 
 
 Make sure the ECR payment service is running on the terminal as below in the notification bar. 
 
