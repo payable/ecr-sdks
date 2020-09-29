@@ -233,7 +233,7 @@ class Demo {
 
 #### JavaScript SDK Integration 
 
-**Establishing connection**
+Establishing connection
 
 ```javascript
 let  ws  =  new  WebSocket('ws://192.168.2.204:45454')
@@ -247,7 +247,7 @@ ws.onerror  = (err) =>  console.log('Error occured: '  +  err)
 ws.onmessage  = (message) =>  console.log('Terminal: '  +  message.data)
 ```
 
-**Sending payment request to the terminal**
+Sending payment request to the terminal
 
 ```javascript
 ws.send(`{"endpoint":"PAYMENT","amount":20.00,"id":1,"method":"CARD","order_tracking":"some_id","receipt_email":"customer@some.lk","receipt_sms":"0771111111"}`)
