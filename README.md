@@ -1,4 +1,5 @@
 
+  
 ![](https://i.imgur.com/ERpCDa7.png)
 ### PAYable ECR SDKs - ECR Integration
 ECR SDKs - https://github.com/payable/ecr-sdks
@@ -6,7 +7,8 @@ ECR SDKs - https://github.com/payable/ecr-sdks
 
 #### Integration 
 
-* Make sure the ECR payment service is running on the terminal as below. <br/><br/>
+Make sure the ECR payment service is running on the terminal as below. 
+
 ![](https://i.imgur.com/pka7PqI.png)
 
 The connection between the terminal and host system will be established using WebSocket which is running inside the ECR application. 
