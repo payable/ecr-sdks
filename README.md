@@ -1,7 +1,7 @@
 
 ![](https://i.imgur.com/P8L2Oc7.png)
 ### PAYable ECR SDKs - ECR Integration
-ECR SDKs - [https://ecr-git-demo.payable.lk](https://ecr-git-demo.payable.lk/)
+ECR SDKs - [ecr-git-demo.payable.lk](https://ecr-git-demo.payable.lk/)
 <hr>
 
 ### Integration 
@@ -254,7 +254,7 @@ ws.send(`{"endpoint":"PAYMENT","amount":20.00,"id":1,"method":"CARD","order_trac
 ```
 
 Refer the example for HTML and JavaScript 
-[https://payable.github.io/ecr-sdks/html](https://payable.github.io/ecr-sdks/html/)
+[payable.github.io/ecr-sdks/html](https://payable.github.io/ecr-sdks/html/)
 
 <hr>
 
