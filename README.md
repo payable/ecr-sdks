@@ -1,21 +1,19 @@
 
-  
+![](https://i.imgur.com/iP9wFqz.png)<br>![](https://i.imgur.com/ERpCDa7.png)
 ### PAYable ECR SDKs - ECR Integration
-
-![](https://i.imgur.com/ERpCDa7.png)
-
-[![](https://img.shields.io/badge/build-passing-brightgreen)]() ECR SDKs - https://github.com/payable/ecr-sdks
-
+ECR SDKs - https://github.com/payable/ecr-sdks
 <hr>
 
-### Initialization 
+#### Integration 
 
-* Make sure the ECR payment service is running on the terminal as below. <br/><br/>
-![](https://i.imgur.com/pka7PqI.png)
+Make sure the ECR payment service is running on the terminal as below in the notification bar. 
+
+![](https://i.imgur.com/agTUUmw.png)
 
 The connection between the terminal and host system will be established using WebSocket which is running inside the ECR application. 
 
 The server is implemented based in these WebSocket protocol versions
+
 * [RFC 6455](https://tools.ietf.org/html/rfc6455) 
 * [RFC 7692](https://tools.ietf.org/html/rfc7692)
 
@@ -83,12 +81,180 @@ Example: `http://192.168.2.204:8080`
 
 If the device is online with the local network, the URL will respond as below or else it won't respond anything since the terminal is offline.
 
-*Terminal Serial: PP35271812000161*
-*ECR Version: 1.0*
-*PAYable Status: READY*
+![](https://i.imgur.com/Efjwaol.png)
 
-*- PAYable ECR SDKs Integration*
+<hr>
 
 #### Java SDK Integration 
 
-Copy the 
+1. Copy or include the ECR JAR library [ecr-1.0.jar](https://github.com/payable/ecr-sdks/raw/master/maven/ecr-test/lib/ecr-1.0.jar) to the Java libs folder.
+
+2. Construct the `ECRTerminal` object with IP address and implement the listener interface.
+
+```java
+ECRTerminal ecrTerminal = new ECRTerminal("192.168.2.204", new ECRTerminal.Listener(){
+
+    @Override
+    public void onOpen(String data) {
+
+    }
+
+    @Override
+    public void onClose(int code, String reason, boolean remote) {
+
+    }
+
+    @Override
+    public void onMessage(String message) {
+
+    }
+
+    @Override
+    public void onMessage(ByteBuffer message) {
+
+    }
+
+    @Override
+    public void onError(Exception ex) {
+
+    }
+});
+```
+
+Initiate the terminal connection, call this method once and handle error when terminal disconnected
+
+```java
+ecrTerminal.connect();
+```
+
+After the connection is successfully established you can start to send the sale request to terminal.
+
+3. Construct the sale request object and convert to JSON
+```java
+PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, 252, 256.00, PAYableRequest.METHOD_CARD);
+String jsonRequest = request.toJson();
+```
+
+4. Send to terminal
+```java
+ecrTerminal.send(jsonRequest);
+```
+
+You can expect the reponse at `onMessage` method of the listener.
+
+Refer to the below demonstration to know more about connection and payment requests.
+
+```java
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.ByteBuffer;
+
+import com.google.gson.JsonSyntaxException;
+
+import org.payable.ecr.ECRTerminal;
+import org.payable.ecr.PAYableRequest;
+import org.payable.ecr.PAYableResponse;
+
+class Demo {
+
+    ECRTerminal ecrTerminal;
+
+    public void start() {
+
+        try {
+
+            ecrTerminal = new ECRTerminal("192.168.2.204", new ECRTerminal.Listener() {
+
+                @Override
+                public void onOpen(String data) {
+
+                    // 1. Construct the sale request object
+                    PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, 252, 256.00, PAYableRequest.METHOD_CARD);
+
+                    // 2. Convert to JSON
+                    String jsonRequest = request.toJson();
+
+                    // 3. Send to terminal
+                    ecrTerminal.send(jsonRequest);
+
+                    // 4. Expect the reponse at 'onMessage' method
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+
+                }
+
+                @Override
+                public void onMessage(String message) {
+
+                    // Map JSON to Java object (optional) or handle from String data
+                    try {
+                        PAYableResponse response = PAYableResponse.from(message);
+                        System.out.println("RESPONSE: " + response.status);
+                    } catch (JsonSyntaxException ex) {
+                        // Invalid JSON
+                    }
+                }
+
+                @Override
+                public void onMessage(ByteBuffer message) {
+                    // Optional implementation
+                }
+
+                @Override
+                public void onError(Exception ex) {
+                    // Handle connection exceptions
+                }
+            });
+
+            // Just for the console print
+            ecrTerminal.debug = true;
+
+            // Initiate the terminal connection, call this method once and handle error when terminal disconnected
+            ecrTerminal.connect();
+
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        new Demo().start();
+    }
+}
+```
+
+<hr>
+
+#### JavaScript SDK Integration 
+
+Establishing connection
+
+```javascript
+let  ws  =  new  WebSocket('ws://192.168.2.204:45454')
+
+ws.onopen  = () =>  console.log("Connection is opened")
+
+ws.onclose  = () =>  console.log("Connection is closed")
+
+ws.onerror  = (err) =>  console.log('Error occured: '  +  err)
+
+ws.onmessage  = (message) =>  console.log('Terminal: '  +  message.data)
+```
+
+Sending payment request to the terminal
+
+```javascript
+ws.send(`{"endpoint":"PAYMENT","amount":20.00,"id":1,"method":"CARD","order_tracking":"some_id","receipt_email":"customer@some.lk","receipt_sms":"0771111111"}`)
+```
+
+Refer the example for HTML and JavaScript
+https://payable.github.io/ecr-sdks/html/
+
+
+*PAYable ECR SDKs Integration*
