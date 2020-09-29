@@ -3,7 +3,6 @@
   
 ### PAYable ECR SDKs - ECR Integration 
 ECR SDKs - https://github.com/payable/ecr-sdks
-[![](https://img.shields.io/badge/build-passing-brightgreen)]()
 <hr>
 
 ### Initialization 
