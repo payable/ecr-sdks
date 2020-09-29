@@ -253,5 +253,8 @@ ws.onmessage  = (message) =>  console.log('Terminal: '  +  message.data)
 ws.send(`{"endpoint":"PAYMENT","amount":20.00,"id":1,"method":"CARD","order_tracking":"some_id","receipt_email":"customer@some.lk","receipt_sms":"0771111111"}`)
 ```
 
+Refer the example for HTML and JavaScript
+https://payable.github.io/ecr-sdks/html/
+
 
 *PAYable ECR SDKs Integration*
