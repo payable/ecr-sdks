@@ -4,7 +4,6 @@
 ![](https://i.imgur.com/ERpCDa7.png)
 
 ECR SDKs - https://github.com/payable/ecr-sdks <br/>
-<a target="_blank" href="https://github.com/payable/ecr-sdks/issues/new">Create Issue</a>
 
 [![](https://img.shields.io/badge/build-passing-brightgreen)]()
 <hr>
