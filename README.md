@@ -118,19 +118,21 @@ ECRTerminal ecrTerminal = new ECRTerminal("192.168.2.204", new ECRTerminal.Liste
 });
 ```
 
-After the connection is successfully established you can start to send the sale request to terminal.
+Initiate the terminal connection, call this method once and handle error when terminal disconnected
 
-3. Construct the sale request object
 ```java
-PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, 252, 256.00, PAYableRequest.METHOD_CARD);
+ecrTerminal.connect();
 ```
 
-4. Convert to JSON
+> After the connection is successfully established you can start to send the sale request to terminal.
+
+3. Construct the sale request object and convert to JSON
 ```java
+PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, 252, 256.00, PAYableRequest.METHOD_CARD);
 String jsonRequest = request.toJson();
 ```
 
-5. Send to terminal
+4. Send to terminal
 ```java
 ecrTerminal.send(jsonRequest);
 ```
@@ -162,10 +164,6 @@ class Demo {
 
                 @Override
                 public void onOpen(String data) {
-
-                    // After the connection is successfully established you can start to send the sale request to terminal
-                    // Sample JSON request for ECR sale transaction.
-                    // {"endpoint":"PAYMENT","amount":20,"id":1,"method":"CARD","order_tracking":"some_id","receipt_email":"aslam@payable.lk","receipt_sms":"0762724081","txid":14526}
 
                     // 1. Construct the sale request object
                     PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, 252, 256.00, PAYableRequest.METHOD_CARD);
