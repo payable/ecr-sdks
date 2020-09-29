@@ -5,9 +5,9 @@ ECR SDKs - https://github.com/payable/ecr-sdks
 
 #### Integration 
 
-Make sure the ECR payment service is running on the terminal as below. 
+Make sure the ECR payment service is running on the terminal as below in the notification bar. 
 
-![](https://i.imgur.com/pka7PqI.png)
+![](https://i.imgur.com/agTUUmw.png)
 
 The connection between the terminal and host system will be established using WebSocket which is running inside the ECR application. 
 
@@ -80,9 +80,7 @@ Example: `http://192.168.2.204:8080`
 
 If the device is online with the local network, the URL will respond as below or else it won't respond anything since the terminal is offline.
 
-*Terminal Serial: PP35271812000161*<br/>
-*ECR Version: 1.0*<br/>
-*PAYable Status: READY*<br/>
+![](https://i.imgur.com/Efjwaol.png)
 
 #### Java SDK Integration 
 
