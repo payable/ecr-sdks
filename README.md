@@ -1,7 +1,7 @@
 
 ![](https://i.imgur.com/P8L2Oc7.png)
 ### PAYable ECR SDKs - ECR Integration
-ECR SDKs - https://github.com/payable/ecr-sdks
+ECR SDKs - [https://ecr-git-demo.payable.lk](https://ecr-git-demo.payable.lk/)
 <hr>
 
 ### Integration 
