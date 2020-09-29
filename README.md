@@ -81,7 +81,7 @@ Example: `http://192.168.2.204:8080`
 
 If the device is online with the local network, the URL will respond as below or else it won't respond anything since the terminal is offline.
 
-![](https://i.imgur.com/Efjwaol.png)
+![](https://i.imgur.com/LCKl7xh.png)
 
 <hr>
 
