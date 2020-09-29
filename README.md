@@ -1,3 +1,4 @@
+
 ![](https://i.imgur.com/ERpCDa7.png)
 ### PAYable ECR SDKs - ECR Integration
 ECR SDKs - https://github.com/payable/ecr-sdks
@@ -126,7 +127,7 @@ Initiate the terminal connection, call this method once and handle error when te
 ecrTerminal.connect();
 ```
 
-> After the connection is successfully established you can start to send the sale request to terminal.
+After the connection is successfully established you can start to send the sale request to terminal.
 
 3. Construct the sale request object and convert to JSON
 ```java
@@ -141,7 +142,7 @@ ecrTerminal.send(jsonRequest);
 
 You can expect the reponse at `onMessage` method of the listener.
 
-> Refer to the below demonstration to know more about connection and payment requests.
+Refer to the below demonstration to know more about connection and payment requests.
 
 ```java
 import java.io.IOException;
@@ -226,6 +227,30 @@ class Demo {
         new Demo().start();
     }
 }
+```
+
+<hr>
+
+#### JavaScript SDK Integration 
+
+Establishing connection
+
+```javascript
+let  ws  =  new  WebSocket('ws://192.168.2.204:45454')
+
+ws.onopen  = () =>  console.log("Connection is opened")
+
+ws.onclose  = () =>  console.log("Connection is closed")
+
+ws.onerror  = (err) =>  console.log('Error occured: '  +  err)
+
+ws.onmessage  = (message) =>  console.log('Terminal: '  +  message.data)
+```
+
+Sending payment request to the terminal
+
+```javascript
+ws.send(`{"endpoint":"PAYMENT","amount":20.00,"id":1,"method":"CARD","order_tracking":"some_id","receipt_email":"customer@some.lk","receipt_sms":"0771111111"}`)
 ```
 
 *- PAYable ECR SDKs Integration*
