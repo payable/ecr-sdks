@@ -85,7 +85,7 @@ If the device is online with the local network, the URL will respond as below or
 
 <hr>
 
-#### Java SDK Integration 
+### Java SDK Integration 
 
 1. Copy or include the ECR JAR library [ecr-1.0.jar](https://github.com/payable/ecr-sdks/raw/master/maven/ecr-test/lib/ecr-1.0.jar) to the Java libs folder.
 
@@ -231,7 +231,7 @@ class Demo {
 
 <hr>
 
-#### JavaScript SDK Integration 
+### JavaScript SDK Integration 
 
 Establishing connection
 
