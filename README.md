@@ -1,5 +1,5 @@
 
-![](https://i.imgur.com/IYxUrDf.png)
+![](https://i.imgur.com/P8L2Oc7.png)
 ### PAYable ECR SDKs - ECR Integration
 ECR SDKs - https://github.com/payable/ecr-sdks
 <hr>
