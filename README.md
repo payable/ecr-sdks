@@ -12,7 +12,7 @@ Make sure the ECR payment service is running on the terminal as below in the not
 
 The connection between the terminal and host system will be established using WebSocket which is running inside the ECR application. 
 
-The server is implemented based in these WebSocket protocol versions
+The server is implemented based on these WebSocket protocol versions
 
 * [RFC 6455](https://tools.ietf.org/html/rfc6455) 
 * [RFC 7692](https://tools.ietf.org/html/rfc7692)
