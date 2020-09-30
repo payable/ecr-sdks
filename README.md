@@ -34,6 +34,7 @@ Success message with serial number: `Terminal connection established: PP35271812
 Adjust the below JSON request as per the payment details and send as plain text to the connected terminal and wait for the response.
 
 Example request:
+
 ```
 {
    "amount": 20.00,
@@ -48,6 +49,7 @@ Example request:
 When the payment gets succeeded or failed, the ECR terminal will send the response back to the requested host system, so the response will be received to the host system if it's listening to the response message.
 
 Example response:
+
 ```
 {
    "approval_code":"408809",
@@ -73,7 +75,8 @@ Example response:
 }
 ```
 
-Transaction status
+Transaction status types:
+
 ```java
  STATUS_FAILED
  STATUS_SUCCESS
@@ -97,7 +100,7 @@ If the device is online with the local network, the URL will respond as below or
 
 ### Java SDK Integration 
 
-1. Copy or include the ECR JAR library [ecr-1.0.jar](https://github.com/payable/ecr-sdks/raw/master/maven/ecr-test/lib/ecr-1.0.jar) to the Java libs folder.
+1. Copy or include the ECR JAR library [ecr-1.0.jar](https://github.com/payable/ecr-sdks/raw/master/maven/ecr-test/lib/ecr-1.0.jar) to the Java libs folder of your Java project.
 
 2. Construct the `ECRTerminal` object with IP address and implement the listener interface.
 
@@ -140,12 +143,14 @@ ecrTerminal.connect();
 After the connection is successfully established you can start to send the sale request to terminal.
 
 3. Construct the sale request object and convert to JSON
+
 ```java
 PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, 252, 256.00, PAYableRequest.METHOD_CARD);
 String jsonRequest = request.toJson();
 ```
 
 4. Send to terminal
+
 ```java
 ecrTerminal.send(jsonRequest);
 ```
@@ -321,5 +326,7 @@ ECRTerminal ecrTerminal = new ECRTerminal("127.0.0.1", new ECRTerminal.Listener(
    e.printStackTrace();
 }
 ```
+
+Refer this repository to learn more.
 
 *PAYable ECR SDKs Integration*
