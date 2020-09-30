@@ -134,13 +134,13 @@ ECRTerminal ecrTerminal = new ECRTerminal("192.168.2.204", new ECRTerminal.Liste
 });
 ```
 
-Initiate the terminal connection, call this method once and handle error when terminal disconnected
+* Initiate the terminal connection, call this method once and handle error when terminal disconnected
 
 ```java
 ecrTerminal.connect();
 ```
 
-After the connection is successfully established you can start to send the sale request to terminal.
+* After the connection is successfully established you can start to send the sale request to terminal.
 
 3. Construct the sale request object and convert to JSON
 
