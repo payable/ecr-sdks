@@ -12,7 +12,7 @@ Make sure the ECR payment service is running on the terminal as below in the not
 
 The connection between the terminal and host system will be established using WebSocket which is running inside the ECR application. 
 
-The server is implemented based in these WebSocket protocol versions
+The server is implemented based on these WebSocket protocol versions
 
 * [RFC 6455](https://tools.ietf.org/html/rfc6455) 
 * [RFC 7692](https://tools.ietf.org/html/rfc7692)
@@ -34,6 +34,7 @@ Success message with serial number: `Terminal connection established: PP35271812
 Adjust the below JSON request as per the payment details and send as plain text to the connected terminal and wait for the response.
 
 Example request:
+
 ```
 {
    "amount": 20.00,
@@ -48,6 +49,7 @@ Example request:
 When the payment gets succeeded or failed, the ECR terminal will send the response back to the requested host system, so the response will be received to the host system if it's listening to the response message.
 
 Example response:
+
 ```
 {
    "approval_code":"408809",
@@ -73,6 +75,17 @@ Example response:
 }
 ```
 
+Transaction status types:
+
+```java
+ STATUS_FAILED
+ STATUS_SUCCESS
+ STATUS_NOT_LOGIN
+ STATUS_INVALID_AMOUNT
+ STATUS_API_UNREACHABLE
+ STATUS_BUSY
+```
+
 #### Checking the terminal status
 
 Browse the terminal's IP address with 8080 port number in the same network to ensure the terminal status. 
@@ -87,7 +100,7 @@ If the device is online with the local network, the URL will respond as below or
 
 ### Java SDK Integration 
 
-1. Copy or include the ECR JAR library [ecr-1.0.jar](https://github.com/payable/ecr-sdks/raw/master/maven/ecr-test/lib/ecr-1.0.jar) to the Java libs folder.
+1. Copy or include the ECR JAR library [ecr-1.0.jar](https://github.com/payable/ecr-sdks/raw/master/maven/ecr-test/lib/ecr-1.0.jar) to the Java libs folder of your Java project.
 
 2. Construct the `ECRTerminal` object with IP address and implement the listener interface.
 
@@ -121,21 +134,23 @@ ECRTerminal ecrTerminal = new ECRTerminal("192.168.2.204", new ECRTerminal.Liste
 });
 ```
 
-Initiate the terminal connection, call this method once and handle error when terminal disconnected
+* Initiate the terminal connection, call this method once and handle error when terminal disconnected
 
 ```java
 ecrTerminal.connect();
 ```
 
-After the connection is successfully established you can start to send the sale request to terminal.
+* After the connection is successfully established you can start to send the sale request to terminal.
 
 3. Construct the sale request object and convert to JSON
+
 ```java
 PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, 252, 256.00, PAYableRequest.METHOD_CARD);
 String jsonRequest = request.toJson();
 ```
 
 4. Send to terminal
+
 ```java
 ecrTerminal.send(jsonRequest);
 ```
@@ -258,7 +273,24 @@ Refer the example for HTML and JavaScript
 
 <hr>
 
+### Python SDK Integration
+
+```python
+import websocket
+
+ws = websocket.WebSocket()
+ws.connect('ws://192.168.2.204:45454')
+ws.send('{"amount":20,"endpoint":"PAYMENT","method":"CARD","order_tracking":"example_sale_from_test","receipt_email":"customer@gmail.com","receipt_sms":"0777777777","id":1}')
+while(True):
+    result = ws.recv()
+    print(result)
+```
+
+<hr>
+
 ### USB Connection
+
+> Request PAYable to enable the USB ADB feature to your device
 
 If you want to connect the terminal using USB cable, please follow the below steps.
 
@@ -295,17 +327,6 @@ ECRTerminal ecrTerminal = new ECRTerminal("127.0.0.1", new ECRTerminal.Listener(
 }
 ```
 
-### Python SDK Integration
-
-```python
-import websocket
-
-ws = websocket.WebSocket()
-ws.connect('ws://192.168.2.204:45454')
-ws.send('{"amount":20,"endpoint":"PAYMENT","method":"CARD","order_tracking":"example_sale_from_test","receipt_email":"customer@gmail.com","receipt_sms":"0777777777","id":1}')
-while(True):
-    result = ws.recv()
-    print(result)
-```
+Refer this repository to learn more.
 
 *PAYable ECR SDKs Integration*
