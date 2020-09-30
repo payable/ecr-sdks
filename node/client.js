@@ -1,28 +1,24 @@
 #!/usr/bin/env node
 
 const W3CWebSocket = require('websocket').w3cwebsocket;
-const readline = require('readline');
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+// ws://127.0.0.1:3001/socket.io/?EIO=3&transport=websocket&token=ASLAMs
+const ws = new W3CWebSocket('ws://192.168.2.222:45454');
 
-const client = new W3CWebSocket('ws://192.168.2.222:45454');
-
-client.onerror = function () {
+ws.onerror = function () {
     console.log('Connection Error');
 };
 
-client.onopen = function () {
+ws.onopen = function () {
     console.log('Client Connected');
 };
 
-client.onclose = function () {
+ws.onclose = function () {
     console.log('Client Closed');
 };
 
-client.onmessage = function (e) {
+ws.onmessage = function (e) {
     console.log("Received: '" + e.data + "'");
-    client.send('from JavaScript: ' + e.data);
+    // client.send('from JavaScript: ' + e.data);
+    // ws.send('42' + JSON.stringify(['client_data', '{"token":"ASLAM", "data": "{}"}']));
 };
