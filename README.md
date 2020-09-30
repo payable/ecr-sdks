@@ -73,6 +73,16 @@ Example response:
 }
 ```
 
+Transaction status
+```java
+ STATUS_FAILED
+ STATUS_SUCCESS
+ STATUS_NOT_LOGIN
+ STATUS_INVALID_AMOUNT
+ STATUS_API_UNREACHABLE
+ STATUS_BUSY
+```
+
 #### Checking the terminal status
 
 Browse the terminal's IP address with 8080 port number in the same network to ensure the terminal status. 
