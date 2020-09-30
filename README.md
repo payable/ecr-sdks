@@ -1,10 +1,10 @@
 
-![](https://i.imgur.com/iP9wFqz.png)<br>![](https://i.imgur.com/ERpCDa7.png)
+![](https://i.imgur.com/P8L2Oc7.png)
 ### PAYable ECR SDKs - ECR Integration
-ECR SDKs - https://github.com/payable/ecr-sdks
+ECR SDKs - [ecr-git-demo.payable.lk](https://ecr-git-demo.payable.lk/)
 <hr>
 
-#### Integration 
+### Integration 
 
 Make sure the ECR payment service is running on the terminal as below in the notification bar. 
 
@@ -75,17 +75,17 @@ Example response:
 
 #### Checking the terminal status
 
-Browser the terminal's IP address with 8080 port number in the same network to ensure the terminal status. 
+Browse the terminal's IP address with 8080 port number in the same network to ensure the terminal status. 
 
 Example: `http://192.168.2.204:8080`
 
 If the device is online with the local network, the URL will respond as below or else it won't respond anything since the terminal is offline.
 
-![](https://i.imgur.com/Efjwaol.png)
+![](https://i.imgur.com/LCKl7xh.png)
 
 <hr>
 
-#### Java SDK Integration 
+### Java SDK Integration 
 
 1. Copy or include the ECR JAR library [ecr-1.0.jar](https://github.com/payable/ecr-sdks/raw/master/maven/ecr-test/lib/ecr-1.0.jar) to the Java libs folder.
 
@@ -231,7 +231,7 @@ class Demo {
 
 <hr>
 
-#### JavaScript SDK Integration 
+### JavaScript SDK Integration 
 
 Establishing connection
 
@@ -253,8 +253,59 @@ Sending payment request to the terminal
 ws.send(`{"endpoint":"PAYMENT","amount":20.00,"id":1,"method":"CARD","order_tracking":"some_id","receipt_email":"customer@some.lk","receipt_sms":"0771111111"}`)
 ```
 
-Refer the example for HTML and JavaScript
-https://payable.github.io/ecr-sdks/html/
+Refer the example for HTML and JavaScript 
+[payable.github.io/ecr-sdks/html](https://payable.github.io/ecr-sdks/html/)
 
+<hr>
+
+### USB Connection
+
+If you want to connect the terminal using USB cable, please follow the below steps.
+
+1. Install Android Debug Bridge (adb) and set the environment path for ADB directory, this can be downloaded from [Android platform-tools](https://developer.android.com/studio/releases/platform-tools)
+
+2. If you are using PAYable Java ECR SDK, you can ignore this, or else you have to run this command on your terminal or PowerShell.
+
+```sh
+adb forward tcp:45454 tcp:45454
+```
+
+3. When you connect the terminal using IP address, you have to provide the IP address as `ws://127.0.0.1:45454`
+
+### USB connection Using PAYable Java ECR SDK
+
+1. Install ADB as per the previous step.
+
+2. Set the IP address as `127.0.0.1`.
+
+```java
+ECRTerminal ecrTerminal = new ECRTerminal("127.0.0.1", new ECRTerminal.Listener(){...
+```
+
+3. (Optional) If you have not installed ADB or any issues with your USB libraries, handle the below exceptions.
+
+```java
+...
+} catch (URISyntaxException e) {
+   e.printStackTrace();
+} catch (IOException e) {
+   e.printStackTrace();
+} catch (InterruptedException e) {
+   e.printStackTrace();
+}
+```
+
+### Python SDK Integration
+
+```python
+import websocket
+
+ws = websocket.WebSocket()
+ws.connect('ws://192.168.2.204:45454')
+ws.send('{"amount":20,"endpoint":"PAYMENT","method":"CARD","order_tracking":"example_sale_from_test","receipt_email":"customer@gmail.com","receipt_sms":"0777777777","id":1}')
+while(True):
+    result = ws.recv()
+    print(result)
+```
 
 *PAYable ECR SDKs Integration*
