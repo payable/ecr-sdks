@@ -260,6 +260,8 @@ Refer the example for HTML and JavaScript
 
 ### USB Connection
 
+> Request PAYable to enable the USB ADB feature to your device
+
 If you want to connect the terminal using USB cable, please follow the below steps.
 
 1. Install Android Debug Bridge (adb) and set the environment path for ADB directory, this can be downloaded from [Android platform-tools](https://developer.android.com/studio/releases/platform-tools)
