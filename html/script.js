@@ -1,6 +1,6 @@
 let ws
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     document.getElementById('textarea').value = JSON.stringify(JSON.parse(document.getElementById('textarea').value), undefined, 4);
 })
 
@@ -18,7 +18,7 @@ function connection() {
 
     ws.onerror = (err) => updateResult('Error occured: ' + err)
 
-    ws.onmessage = (message) => { updateResult('Terminal: ' + message.data) }
+    ws.onmessage = (message) => { updateResult('Response received: ' + message.data) }
 }
 
 function sendPaymentRequest() {

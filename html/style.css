@@ -1,0 +1,21 @@
+#result {
+    overflow-wrap: anywhere;
+    list-style: none;
+    margin-top: 10px;
+    background: #f7f7f7;
+    padding: 15px;
+    color: #4a4a4a;
+    width: fit-content;
+}
+
+#result li:last-child {
+    margin-bottom: 0;
+}
+
+#result li {
+    margin-bottom: 10px;
+}
+
+pre {
+    white-space: pre-wrap;
+}

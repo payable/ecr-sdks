@@ -4,25 +4,18 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="script.js"></script>
-    <title>TMS</title>
-    <style>
-        #result{overflow-wrap:anywhere;list-style:none;margin-top:10px;background:#f7f7f7;padding:15px;color:#4a4a4a;width:fit-content}#result li:last-child{margin-bottom:0}#result li{margin-bottom:10px}
-    </style>
+    <title>ECR - Demonstration</title>
 </head>
 
 <body>
 
     <h3>PAYable ECR Demonstration</h3>
-    <form action="#" onsubmit="event.preventDefault();sendPaymentRequest()">
-        <p><label>Terminal address</label> <br /> <input value="ws://192.168.2.204:45454" required type="text" id="address" /></p>
-        <p><textarea required rows="10" cols="40" id="textarea">{"endpoint":"PAYMENT","amount":20.00,"id":1,"method":"CARD","order_tracking":"some_id","receipt_email":"aslam@payable.lk","receipt_sms":"0762724081","txid":14526}</textarea></p>
-        <input type="button" value="Connect / Disconnect" onclick="connection()" />
-        <input type="submit" value="Send payment request" />
-    </form>
 
-    <ul id="result"></ul>
+    <ul>
+        <li><a style="text-decoration: none;" href="internal.html" target="_blank">Internal (LAN) Sale</a></li>
+        <li><a style="text-decoration: none;" href="external.html" target="_blank">External (WAN) Sale</a></li>
+        <li><a style="text-decoration: none;" href="external-auth.html" target="_blank">External Authentication</a></li>
+    </ul>
 
 </body>
 

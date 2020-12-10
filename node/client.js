@@ -2,7 +2,7 @@
 
 const W3CWebSocket = require('websocket').w3cwebsocket;
 
-// ws://127.0.0.1:3001/socket.io/?EIO=3&transport=websocket&token=ASLAMs
+// ws://127.0.0.1:3001/socket.io/?EIO=3&transport=websocket&token=ASLAMsz
 const ws = new W3CWebSocket('ws://192.168.2.222:45454');
 
 ws.onerror = function () {
