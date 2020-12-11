@@ -1,4 +1,3 @@
-
 ![](https://i.imgur.com/P8L2Oc7.png)
 ### PAYable ECR SDKs - ECR Integration
 ECR SDKs - [ecr-git-demo.payable.lk](https://ecr-git-demo.payable.lk/)
@@ -21,21 +20,43 @@ Refer to the Mozilla [WebSocket APIs](https://developer.mozilla.org/en-US/docs/W
 
 #### Establishing connection between  ECR terminal and the host system
 
-Initiate a WebSocket connection to the terminal's LAN IP address if both are in the same network, let's assume the example IP address of the terminal as `192.168.2.204` then the address would be starting with `ws://` and the ECR port number is 45454.
+Initiate a WebSocket connection to the terminal's LAN IP address if both are in the same network, let's assume the example IP address of the terminal as `192.168.8.101` then the address would be starting with `ws://` and the ECR port number is **45454**.
 
-Example: `ws://192.168.2.204:45454`
+**Token:** `4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=`
+**POS host name:**  `ARPICO-1` - This is the name of your current POS system.
+
+Example: 
+`ws://192.168.8.101:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1`
 
 Once the connection is established the host system will be notified from the implemented WebSocket client as connection established.
 
-Success message with serial number: `Terminal connection established: PP35271812000161`
+Success message with serial number: 
+
+```json
+{
+   "origin":"PP35271812000161",
+   "request":{
+      "origin":"ARPICO-1"
+   },
+   "status":"STATUS_TERMINAL_AUTHORIZED"
+}
+```
+
+In the below situations handshake will be failed with the 404 error code:
+
+1. Token is invalid or not presented
+2. POS name is empty or not provided
+
+Error:
+> Error during WebSocket handshake: Unexpected response code: 404
 
 #### Sending payment request to the ECR terminal  
 
-Adjust the below JSON request as per the payment details and send as plain text to the connected terminal and wait for the response.
+Adjust the below JSON request as per the payment details, send as plain text to the connected terminal and wait for the response.
 
 Example request:
 
-```
+```json
 {
    "amount": 20.00,
    "endpoint": "PAYMENT",
@@ -43,58 +64,83 @@ Example request:
    "order_tracking": "example_sale_from_test",
    "receipt_email": "customer@gmail.com",
    "receipt_sms": "0777777777",
-   "id": 1
+   "id": 14526
 }
 ```
 When the payment gets succeeded or failed, the ECR terminal will send the response back to the requested host system, so the response will be received to the host system if it's listening to the response message.
 
-Example response:
+Example success response:
 
-```
+```json
 {
    "approval_code":"408809",
-   "card_name":"04/TLE PROJECT TEST CARD ",
-   "card_type":"VISA",
+   "card_name":"MOHAMMED/ASLAM            ",
+   "card_type":"MASTER",
    "mid":"242332553252353",
+   "origin":"PP35271812000161",
    "request":{
       "amount":20.0,
       "endpoint":"PAYMENT",
       "id":1,
       "method":"CARD",
       "order_tracking":"example_sale_from_test",
-      "origin":"/192.168.2.230:41588",
+      "origin":"ARPICO-1",
       "receipt_email":"customer@gmail.com",
       "receipt_sms":"0777777777",
-      "txid":0
+      "txid":14526
    },
-   "server_time":"2020-09-29 01:42:22 PM",
+   "server_time":"2020-12-12 01:30:55 AM",
    "status":"STATUS_SUCCESS",
    "tid":"24343227",
    "transaction_type":"EMV",
-   "txid":26741
+   "txid":44910
+}
+```
+
+Example failure response:
+
+```json
+{
+   "error":"Received duplicate transaction request.",
+   "origin":"PP35271812000161",
+   "request":{
+      "amount":20.0,
+      "endpoint":"PAYMENT",
+      "id":1,
+      "method":"CARD",
+      "order_tracking":"example_sale_from_test",
+      "origin":"ARPICO-1",
+      "receipt_email":"customer@gmail.com",
+      "receipt_sms":"0777777777",
+      "txid":14526
+   },
+   "status":"STATUS_FAILED"
 }
 ```
 
 Transaction status types:
 
-```java
- STATUS_FAILED
- STATUS_SUCCESS
- STATUS_NOT_LOGIN
- STATUS_INVALID_AMOUNT
- STATUS_API_UNREACHABLE
- STATUS_BUSY
+```
+STATUS_TERMINAL_AUTHORIZED
+STATUS_SUCCESS
+STATUS_API_UNREACHABLE
+STATUS_FAILED
+STATUS_NOT_LOGIN
+STATUS_INVALID_AMOUNT
+STATUS_BUSY
 ```
 
 #### Checking the terminal status
 
 Browse the terminal's IP address with 8080 port number in the same network to ensure the terminal status. 
 
-Example: `http://192.168.2.204:8080`
+Example: `http://192.168.8.101:8080`
 
 If the device is online with the local network, the URL will respond as below or else it won't respond anything since the terminal is offline.
 
-![](https://i.imgur.com/LCKl7xh.png)
+![](https://i.imgur.com/ESCsDb3.png)
+
+This will show the connected POS hosts from the internal and external network sources using LAN and WAN.
 
 <hr>
 
@@ -102,10 +148,10 @@ If the device is online with the local network, the URL will respond as below or
 
 1. Copy or include the ECR JAR library [ecr-1.0.jar](https://github.com/payable/ecr-sdks/raw/master/maven/ecr-test/lib/ecr-1.0.jar) to the Java libs folder of your Java project.
 
-2. Construct the `ECRTerminal` object with IP address and implement the listener interface.
+2. Construct the `ECRTerminal` object with IP address, token, POS host name and implement the listener interface.
 
 ```java
-ECRTerminal ecrTerminal = new ECRTerminal("192.168.2.204", new ECRTerminal.Listener(){
+ECRTerminal ecrTerminal = new ECRTerminal("192.168.8.101", "4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=", "JAVA-POS", new ECRTerminal.Listener(){
 
     @Override
     public void onOpen(String data) {
@@ -134,15 +180,15 @@ ECRTerminal ecrTerminal = new ECRTerminal("192.168.2.204", new ECRTerminal.Liste
 });
 ```
 
-* Initiate the terminal connection, call this method once and handle error when terminal disconnected
+Initiate the terminal connection, call this method once and do error handling when the terminal disconnected.
 
 ```java
 ecrTerminal.connect();
 ```
 
-* After the connection is successfully established you can start to send the sale request to terminal.
+After the connection is successfully established you can start to send the payment request to the terminal.
 
-3. Construct the sale request object and convert to JSON
+3. Construct the payment request object and convert it to JSON
 
 ```java
 PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, 252, 256.00, PAYableRequest.METHOD_CARD);
@@ -155,7 +201,7 @@ String jsonRequest = request.toJson();
 ecrTerminal.send(jsonRequest);
 ```
 
-You can expect the reponse at `onMessage` method of the listener.
+> You can expect the reponse at `onMessage` method of the listener.
 
 Refer to the below demonstration to know more about connection and payment requests.
 
@@ -178,7 +224,7 @@ class Demo {
 
         try {
 
-            ecrTerminal = new ECRTerminal("192.168.2.204", new ECRTerminal.Listener() {
+            ecrTerminal = new ECRTerminal("192.168.2.204", "4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=", "JAVA-POS", new ECRTerminal.Listener() {
 
                 @Override
                 public void onOpen(String data) {
@@ -251,7 +297,7 @@ class Demo {
 Establishing connection
 
 ```javascript
-let  ws  =  new  WebSocket('ws://192.168.2.204:45454')
+let  ws  =  new  WebSocket('ws://192.168.8.101:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1')
 
 ws.onopen  = () =>  console.log("Connection is opened")
 
@@ -259,7 +305,7 @@ ws.onclose  = () =>  console.log("Connection is closed")
 
 ws.onerror  = (err) =>  console.log('Error occured: '  +  err)
 
-ws.onmessage  = (message) =>  console.log('Terminal: '  +  message.data)
+ws.onmessage  = (message) =>  console.log('Response received: '  +  message.data)
 ```
 
 Sending payment request to the terminal
@@ -268,7 +314,7 @@ Sending payment request to the terminal
 ws.send(`{"endpoint":"PAYMENT","amount":20.00,"id":1,"method":"CARD","order_tracking":"some_id","receipt_email":"customer@some.lk","receipt_sms":"0771111111"}`)
 ```
 
-Refer the example for HTML and JavaScript 
+Refer the examples for HTML and JavaScript implementations 
 [payable.github.io/ecr-sdks/html](https://payable.github.io/ecr-sdks/html/)
 
 <hr>
@@ -279,7 +325,7 @@ Refer the example for HTML and JavaScript
 import websocket
 
 ws = websocket.WebSocket()
-ws.connect('ws://192.168.2.204:45454')
+ws.connect('ws://192.168.8.101:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1')
 ws.send('{"amount":20,"endpoint":"PAYMENT","method":"CARD","order_tracking":"example_sale_from_test","receipt_email":"customer@gmail.com","receipt_sms":"0777777777","id":1}')
 while(True):
     result = ws.recv()
@@ -290,28 +336,32 @@ while(True):
 
 ### USB Connection
 
-> Request PAYable to enable the USB ADB feature to your device
+> Request PAYable to enable the USB ADB feature to your terminal
 
 If you want to connect the terminal using USB cable, please follow the below steps.
 
-1. Install Android Debug Bridge (adb) and set the environment path for ADB directory, this can be downloaded from [Android platform-tools](https://developer.android.com/studio/releases/platform-tools)
+1. Install Android Debug Bridge (adb) and set the environment path for ADB directory on your host POS system, this can be downloaded from [Android platform-tools](https://developer.android.com/studio/releases/platform-tools)
 
-2. If you are using PAYable Java ECR SDK, you can ignore this, or else you have to run this command on your terminal or PowerShell.
+2. If you are using PAYable Java ECR SDK, you can ignore the below step, or else you have to run this command on your Linux/Mac Terminal or Windows PowerShell.
 
 ```sh
 adb forward tcp:45454 tcp:45454
 ```
 
-3. When you connect the terminal using IP address, you have to provide the IP address as `ws://127.0.0.1:45454`
+3. When you connect the terminal through USB, you have to provide the IP address as `127.0.0.1`
+
+```
+ws://127.0.0.1:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1
+```
 
 ### USB connection Using PAYable Java ECR SDK
 
-1. Install ADB as per the previous step.
+1. Install ADB as per the previous step
 
-2. Set the IP address as `127.0.0.1`.
+2. Set the IP address as `127.0.0.1`
 
 ```java
-ECRTerminal ecrTerminal = new ECRTerminal("127.0.0.1", new ECRTerminal.Listener(){...
+ECRTerminal ecrTerminal = new ECRTerminal("127.0.0.1", ...
 ```
 
 3. (Optional) If you have not installed ADB or any issues with your USB libraries, handle the below exceptions.
