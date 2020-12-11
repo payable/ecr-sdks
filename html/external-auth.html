@@ -12,11 +12,8 @@
 <body>
     <h3>PAYable ECR Demonstration - External Authentication</h3>
     <form action="#" onsubmit="event.preventDefault();sendPaymentRequest()">
-        <p><label>Terminal address</label> <br /> <input style="max-width: 598px;width: 100%;"
-                value="ws://ecr.payable.lk?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1" required
-                type="text" id="address" /></p>
-        <p><textarea required rows="10" cols="73"
-                id="textarea">{"terminal":"PP35271812000161","auth_code":44280}</textarea></p>
+        <p><label>Terminal address</label> <br /> <input style="max-width: 598px;width: 100%;" value="ws://ecr.payable.lk?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1" required type="text" id="address" /></p>
+        <p><textarea required rows="10" cols="73" id="textarea">{"terminal":"PP35271812000161","auth_code":44280}</textarea></p>
         <input type="button" value="Server - Connect / Disconnect" onclick="connection()" />
         <input type="submit" value="Send authentication request" />
     </form>

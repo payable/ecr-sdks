@@ -12,12 +12,8 @@
 <body>
     <h3>PAYable ECR Demonstration - Internal (LAN) Sale</h3>
     <form action="#" onsubmit="event.preventDefault();sendPaymentRequest()">
-        <p><label>Terminal address</label> <br /> <input style="max-width: 651px;width: 100%;"
-                value="ws://192.168.8.101:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1"
-                required type="text" id="address" /></p>
-        <p><textarea required rows="10" cols="80"
-                id="textarea">{"endpoint":"PAYMENT","amount":20.00,"id":1,"method":"CARD","order_tracking":"some_id","receipt_email":"aslam@payable.lk","receipt_sms":"0762724081","txid":14526}</textarea>
-        </p>
+        <p><label>Terminal address</label> <br /> <input style="max-width: 651px;width: 100%;" value="ws://192.168.8.101:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1" required type="text" id="address" /></p>
+        <p><textarea required rows="10" cols="80" id="textarea">{"endpoint":"PAYMENT","amount":20.00,"id":1,"method":"CARD","order_tracking":"some_id","receipt_email":"aslam@payable.lk","receipt_sms":"0762724081","txid":14526}</textarea></p>
         <input type="button" value="Connect / Disconnect" onclick="connection()" />
         <input type="submit" value="Send payment request" />
     </form>

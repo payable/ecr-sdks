@@ -10,10 +10,12 @@ public class PAYableResponse {
     public static final String STATUS_INVALID_AMOUNT = "STATUS_INVALID_AMOUNT";
     public static final String STATUS_API_UNREACHABLE = "STATUS_API_UNREACHABLE";
     public static final String STATUS_BUSY = "STATUS_BUSY";
+    public static final String STATUS_TERMINAL_AUTHORIZED = "STATUS_TERMINAL_AUTHORIZED";
 
     public PAYableRequest request;
+    public String origin;
     public String status;
-    public long txid;
+    public Long txid;
     public String mid;
     public String tid;
     public String transaction_type;
@@ -22,6 +24,10 @@ public class PAYableResponse {
     public String approval_code;
     public String server_time;
     public String error;
+
+    public PAYableResponse(PAYableRequest request) {
+        this.request = request;
+    }
 
     public static PAYableResponse from(String data) {
         return new Gson().fromJson(data, PAYableResponse.class);

@@ -28,8 +28,15 @@ public class ECRTerminal extends WebSocketClient {
         void onError(Exception ex);
     }
 
-    public ECRTerminal(String address, Listener listener) throws URISyntaxException, IOException, InterruptedException {
-        super(prepareURI(address));
+    public ECRTerminal(String token, String pos, Listener listener)
+            throws URISyntaxException, IOException, InterruptedException {
+        super(prepareURI("ecr", token, pos));
+        this.clientListener = listener;
+    }
+
+    public ECRTerminal(String address, String token, String pos, Listener listener)
+            throws URISyntaxException, IOException, InterruptedException {
+        super(prepareURI(address, token, pos));
         this.clientListener = listener;
     }
 
@@ -63,7 +70,8 @@ public class ECRTerminal extends WebSocketClient {
         clientListener.onError(ex);
     }
 
-    private static URI prepareURI(String address) throws URISyntaxException, IOException, InterruptedException {
+    private static URI prepareURI(String address, String token, String pos)
+            throws URISyntaxException, IOException, InterruptedException {
 
         if (address.equals("127.0.0.1")) {
 
@@ -76,9 +84,13 @@ public class ECRTerminal extends WebSocketClient {
             while ((line = buf.readLine()) != null) {
                 System.out.println(line);
             }
+
+        } else if (address.equals("ecr")) {
+            return new URI("ws://ecr.payable.lk?token=" + token + "&pos=" + pos);
         }
 
-        return address.contains("ws://") ? new URI(address) : new URI("ws://" + address + ":45454");
+        return address.contains("ws://") ? new URI(address)
+                : new URI("ws://" + address + ":45454?token=" + token + "&pos=" + pos);
     }
 
     public void consoleLog(String message) {
