@@ -31,9 +31,7 @@ Example:
 ws://192.168.8.101:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1
 ```
 
-Once the connection is established the host system will be notified from the implemented WebSocket client as connection established.
-
-Success message with serial number: 
+Once the connection is established the host system will be notified from the implemented WebSocket client with a success message from the terminal as below. 
 
 ```json
 {
@@ -49,6 +47,7 @@ In the below situations handshake will be failed with the 404 error code:
 
 1. Token is invalid or not presented
 2. POS name is empty or not provided
+3. POS name is duplicate and already in use
 
 Error:
 > Error during WebSocket handshake: Unexpected response code: 404
