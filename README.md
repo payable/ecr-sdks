@@ -22,10 +22,12 @@ Refer to the Mozilla [WebSocket APIs](https://developer.mozilla.org/en-US/docs/W
 
 Initiate a WebSocket connection to the terminal's LAN IP address if both are in the same network, let's assume the example IP address of the terminal as `192.168.8.101` then the address would be starting with `ws://` and the ECR port number is **45454**.
 
-**Token:** `4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=` <br/>
-**POS host name:**  `ARPICO-1` - This is the name of your current POS system.
+```
+Token: 4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=
+POS host name:  ARPICO-1 - This is the name of your current POS system.
+```
 
-> Example: 
+Example: 
 `ws://192.168.8.101:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1`
 
 Once the connection is established the host system will be notified from the implemented WebSocket client as connection established.
