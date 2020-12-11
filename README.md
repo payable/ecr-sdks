@@ -69,7 +69,7 @@ Example request:
    "id": 14526
 }
 ```
-When the payment gets succeeded or failed, the ECR terminal will send the response back to the requested host system, so the response will be received to the host system if it's listening to the response message.
+When the payment gets succeeded or failed, the ECR terminal will send the response back to the requested host system with the request, so the response will be received to the host system if it's listening to the response message.
 
 Example success response:
 
