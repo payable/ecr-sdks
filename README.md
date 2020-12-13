@@ -175,45 +175,45 @@ In the below situations handshake will be failed:
 
 1. Token and POS/Host name are not provided
 
-Error:
+	Error:
 
-> HTTP/1.1 400 Bad Request
+	> HTTP/1.1 400 Bad Request
 
-Example:
+	Example:
 
-```
-Error during WebSocket handshake: Unexpected response code: 400
-```
+	```
+	Error during WebSocket handshake: Unexpected response code: 400
+	```
 
 2. Token is invalid
 
-Error:
+	Error:
 
-> HTTP/1.1 401 Unauthorized
+	> HTTP/1.1 401 Unauthorized
 
-Example:
+	Example:
 
-```
-Error during WebSocket handshake: Unexpected response code: 401
-```
+	```
+	Error during WebSocket handshake: Unexpected response code: 401
+	```
 
-Some clients can identify the response code 401 as invalid authentication
+	Some clients can identify the response code 401 as invalid authentication
 
-```
-HTTP Authentication failed; no valid credentials available
-```
+	```
+	HTTP Authentication failed; no valid credentials available
+	```
 
 3. POS name is duplicate and already in use
 
-Error:
+	Error:
 
-> HTTP/1.1 429 Too Many Requests
+	> HTTP/1.1 429 Too Many Requests
 
-Example:
+	Example:
 
-```
-Error during WebSocket handshake: Unexpected response code: 429
-```
+	```
+	Error during WebSocket handshake: Unexpected response code: 429
+	```
 
 <hr>
 
