@@ -18,7 +18,7 @@ The server is implemented based on these WebSocket protocol versions
 
 Refer to the Mozilla [WebSocket APIs](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) to write your WebSocket client or use any libraries available based on the above protocol versions.
 
-#### 1.0 Internal connection through LAN Network
+#### 1 Internal connection through LAN Network
 
 The below explanation can guide you to establish a connection between the host system and the ECR terminal using an internal (LAN - Local Area Network) network.
 
@@ -151,13 +151,13 @@ If the device is online with the local network, the URL will respond as below or
 
 This will show the connected POS hosts from the internal and external network sources using LAN and WAN.
 
-#### 2.0 External connection through WAN Network
+#### 2 External connection through WAN Network
 
 The below explanation can guide you to establish a connection between the host system and the ECR terminal using an external (WAN - Wide Area Network) network/internet.
 
 #### 2.1 Establishing connection between  ECR terminal and the host system through WAN
 
-1. Initiate a WebSocket connection to our centralized ECR network with the token and POS name.
+2.1.1 Initiate a WebSocket connection to our centralized ECR network with the token and POS name.
 
 * Centralized ECR network: **ws://ecr.payable.lk**
 * Token: **4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=**
@@ -176,11 +176,9 @@ In the below situations handshake will be failed:
 1. Token and POS/Host name are not provided
 
 	Error:
-
 	> HTTP/1.1 400 Bad Request
 
 	Example:
-
 	```
 	Error during WebSocket handshake: Unexpected response code: 400
 	```
@@ -188,11 +186,9 @@ In the below situations handshake will be failed:
 2. Token is invalid
 
 	Error:
-
 	> HTTP/1.1 401 Unauthorized
 
 	Example:
-
 	```
 	Error during WebSocket handshake: Unexpected response code: 401
 	```
@@ -206,14 +202,43 @@ In the below situations handshake will be failed:
 3. POS/Host name is duplicate and already in use
 
 	Error:
-
 	> HTTP/1.1 429 Too Many Requests
 
 	Example:
-
 	```
 	Error during WebSocket handshake: Unexpected response code: 429
 	```
+
+2.1.2 Send a auth request to authorize the terminal with the current POS/Host system if it's not already authorized.
+
+1. Turn on your terminal device and connect with the internet
+2. Make sure the terminal is connected with the ECR network
+3. Send the authorization request to the terminal's serial number as below
+
+Example auth request:
+
+```json
+{
+    "terminal": "PP35271812000161",
+    "auth_code": 44280
+}
+```
+
+Example auth response:
+
+```json
+{
+   "origin":"PP35271812000161",
+   "request":{
+      "auth_code":44280,
+      "external":true,
+      "origin":"ARPICO-1",
+      "terminal":"PP35271812000161"
+   },
+   "status":"STATUS_TERMINAL_AUTHORIZED"
+}
+```
+
 
 <hr>
 
