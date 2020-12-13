@@ -282,6 +282,8 @@ When you send a payment request to a terminal that is not authorized with your P
 STATUS_TERMINAL_UNAUTHORIZED
 ```
 
+> JavaScript Demonstration: http://ecr-git-demo.payable.lk/html/
+
 <hr>
 
 #### 3 ECR Android Service
