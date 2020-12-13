@@ -3,7 +3,7 @@
 ECR SDKs - [ecr-git-demo.payable.lk](https://ecr-git-demo.payable.lk/)
 <hr>
 
-### 1.0 Integration 
+### Integration 
 
 Make sure the ECR payment service is running on the terminal as below in the notification bar. 
 
@@ -203,7 +203,7 @@ In the below situations handshake will be failed:
 	HTTP Authentication failed; no valid credentials available
 	```
 
-3. POS name is duplicate and already in use
+3. POS/Host name is duplicate and already in use
 
 	Error:
 
