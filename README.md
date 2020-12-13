@@ -59,7 +59,7 @@ Error:
 Error during WebSocket handshake: Unexpected response code: 404
 ```
 
-#### 1.2 Sending payment request to the ECR terminal  
+#### 1.2 Sending payment request to the ECR terminal
 
 Adjust the below JSON request as per the payment details, send as plain text to the connected terminal and wait for the response.
 
@@ -78,7 +78,7 @@ Example request:
 ```
 When the payment gets succeeded or failed, the ECR terminal will send the response back to the requested host system with the request, so the response will be received to the host system if it's listening to the response message.
 
-Example success response:
+Example successful response:
 
 ```json
 {
@@ -127,19 +127,7 @@ Example failure response:
 }
 ```
 
-Transaction status types:
-
-```
-STATUS_TERMINAL_AUTHORIZED
-STATUS_SUCCESS
-STATUS_API_UNREACHABLE
-STATUS_FAILED
-STATUS_NOT_LOGIN
-STATUS_INVALID_AMOUNT
-STATUS_BUSY
-```
-
-#### 1.3 Checking the terminal status
+#### 1.3 Checking the terminal status through LAN
 
 Browse the terminal's IP address with 8080 port number in the same network to ensure the terminal status. 
 
@@ -150,6 +138,20 @@ If the device is online with the local network, the URL will respond as below or
 ![](https://i.imgur.com/ESCsDb3.png)
 
 This will show the connected POS hosts from the internal and external network sources using LAN and WAN.
+
+#### 1.5 Transaction status types
+
+```
+STATUS_TERMINAL_AUTHORIZED
+STATUS_TERMINAL_AUTHORIZED_ALREADY
+STATUS_SUCCESS
+STATUS_INVALID_AUTHCODE
+STATUS_API_UNREACHABLE
+STATUS_FAILED
+STATUS_NOT_LOGIN
+STATUS_INVALID_AMOUNT
+STATUS_BUSY
+```
 
 #### 2 External connection through WAN Network
 
@@ -224,7 +226,14 @@ Example auth request:
 }
 ```
 
-Example auth response:
+The terminal will validate your auth code and accept the authorization request with a successful response as below.
+
+Status:
+```
+STATUS_TERMINAL_AUTHORIZED
+```
+ 
+Example successful auth response:
 
 ```json
 {
@@ -239,6 +248,39 @@ Example auth response:
 }
 ```
 
+If you send an auth request to a terminal that is not connected and online with the ECR network, you will get the response as terminal unreachable with below status.
+
+```
+STATUS_TERMINAL_UNREACHABLE
+```
+
+If the auth code is invalid you will receive the response as the below status.
+
+```
+STATUS_INVALID_AUTHCODE
+```
+
+If the POS/Host system has already done a successful authorization process with the terminal, it will get the response status as below.
+
+```
+STATUS_TERMINAL_AUTHORIZED_ALREADY
+```
+
+#### 2.2 Sending payment request to the ECR terminal through WAN
+
+The process is same as the LAN request/response that we already explained above in 1.2.
+
+Additionally, you will get the below status when you send a payment request to a terminal that is not connected to the ECR network and online.
+
+```
+STATUS_TERMINAL_UNREACHABLE
+```
+
+When you send a payment request to a terminal that is not authorized with your POS/Host system at least once, you will get the status as not authorized.
+
+```
+STATUS_TERMINAL_UNAUTHORIZED
+```
 
 <hr>
 
