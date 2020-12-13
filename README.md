@@ -139,19 +139,17 @@ If the device is online with the local network, the URL will respond as below or
 
 This will show the connected POS hosts from the internal and external network sources using LAN and WAN.
 
-#### 1.5 Transaction status types
+#### 1.4 Transaction status types
 
-```
-STATUS_TERMINAL_AUTHORIZED
-STATUS_TERMINAL_AUTHORIZED_ALREADY
-STATUS_SUCCESS
-STATUS_INVALID_AUTHCODE
-STATUS_API_UNREACHABLE
-STATUS_FAILED
-STATUS_NOT_LOGIN
-STATUS_INVALID_AMOUNT
-STATUS_BUSY
-```
+> STATUS_TERMINAL_AUTHORIZED
+> STATUS_TERMINAL_AUTHORIZED_ALREADY
+> STATUS_SUCCESS
+> STATUS_INVALID_AUTHCODE
+> STATUS_API_UNREACHABLE
+> STATUS_FAILED
+> STATUS_NOT_LOGIN
+> STATUS_INVALID_AMOUNT
+> STATUS_BUSY
 
 #### 2 External connection through WAN Network
 
@@ -284,11 +282,47 @@ STATUS_TERMINAL_UNAUTHORIZED
 
 <hr>
 
+#### 3 ECR Android Service
+
+ECR Android service is running in the terminal to expose the ECR facilities to the terminal.
+
+#### 3.1 Auth Code
+
+Auth code is the authorization code that helps the POS/Host systems to make the connection between terminal and POS/Host within the ECR network through WAN.
+
+![](https://i.imgur.com/pdEvwam.png)
+
+#### 3.2 Revoke Auth Code
+
+The auth code can be revoked from the below option in the ECR application of the terminal, which would help to prevent the new POS/Host system from connecting to the terminal.
+
+![](https://i.imgur.com/RgQiemb.png)
+
+#### 3.2 Remove external POS/Host systems from the terminal
+
+POS/Host systems that are authorized already would be listed here in the ECR application of the terminal, it can be removed from the terminal using the remove button which also removes the absolute authorizations of those POS/Host systems.
+
+![](https://i.imgur.com/GrUiaCa.png)
+
 ### Java SDK Integration 
 
 1. Copy or include the ECR JAR library [ecr-1.0.jar](https://github.com/payable/ecr-sdks/raw/master/maven/ecr-test/lib/ecr-1.0.jar) to the Java libs folder of your Java project.
 
 2. Construct the `ECRTerminal` object with IP address, token, POS host name and implement the listener interface.
+
+If you connect the terminal using the LAN network internally, the object should be constructed as below:
+
+```java
+ECRTerminal ecrTerminal = new ECRTerminal(ip_address, token, pos_name, listener);
+```
+
+If you connect the terminal using the WAN network externally, the object should be constructed as below:
+
+```java
+ECRTerminal ecrTerminal = new ECRTerminal(token, pos_name, listener);
+```
+
+Example: 
 
 ```java
 ECRTerminal ecrTerminal = new ECRTerminal("192.168.8.101", "4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=", "JAVA-POS", new ECRTerminal.Listener(){
@@ -335,6 +369,20 @@ PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, 252
 String jsonRequest = request.toJson();
 ```
 
+If you have connected the terminal using the WAN network externally, the payment request should be constructed as below:
+
+The first parameter is the serial number of your terminal
+
+```java
+PAYableRequest  request  =  new  PAYableRequest("PP35271812000161", PAYableRequest.ENDPOINT_PAYMENT, 252, 256.00, PAYableRequest.METHOD_CARD);
+```
+
+Explanation: 
+
+```java
+PAYableRequest  request  =  new  PAYableRequest(terminal, PAYableRequest.ENDPOINT_PAYMENT, id, amount, PAYableRequest.METHOD_CARD);
+```
+
 4. Send to terminal
 
 ```java
@@ -342,6 +390,13 @@ ecrTerminal.send(jsonRequest);
 ```
 
 > You can expect the reponse at `onMessage` method of the listener.
+
+If the terminal rejects your request with `STATUS_TERMINAL_UNAUTHORIZED` status, you need to send the auth request to the terminal as below:
+
+```java
+PAYableRequest  request  =  new  PAYableRequest(terminal_serial, auth_code);
+ecrTerminal.send(request.toJson());
+```
 
 Refer to the below demonstration to know more about connection and payment requests.
 
