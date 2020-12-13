@@ -3,7 +3,7 @@
 ECR SDKs - [ecr-git-demo.payable.lk](https://ecr-git-demo.payable.lk/)
 <hr>
 
-### Integration 
+### 1.0 Integration 
 
 Make sure the ECR payment service is running on the terminal as below in the notification bar. 
 
@@ -18,7 +18,11 @@ The server is implemented based on these WebSocket protocol versions
 
 Refer to the Mozilla [WebSocket APIs](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) to write your WebSocket client or use any libraries available based on the above protocol versions.
 
-#### Establishing connection between  ECR terminal and the host system
+#### 1.0 Internal connection through LAN Network
+
+The below explanation can guide you to establish a connection between the host system and the ECR terminal using an internal (LAN - Local Area Network) network.
+
+#### 1.1 Establishing connection between  ECR terminal and the host system through LAN
 
 Initiate a WebSocket connection to the terminal's LAN IP address if both are in the same network, let's assume the example IP address of the terminal as `192.168.8.101` then the address would be starting with `ws://` and the ECR port number is **45454**.
 
@@ -31,7 +35,7 @@ Example:
 ws://192.168.8.101:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1
 ```
 
-Once the connection is established the host system will be notified from the implemented WebSocket client with a success message from the terminal as below. 
+Once the connection is established, the host system will be notified from the implemented WebSocket client with a success message from the terminal as below. 
 
 ```json
 {
@@ -50,9 +54,12 @@ In the below situations handshake will be failed with the 404 error code:
 3. POS name is duplicate and already in use
 
 Error:
-> Error during WebSocket handshake: Unexpected response code: 404
 
-#### Sending payment request to the ECR terminal  
+```
+Error during WebSocket handshake: Unexpected response code: 404
+```
+
+#### 1.2 Sending payment request to the ECR terminal  
 
 Adjust the below JSON request as per the payment details, send as plain text to the connected terminal and wait for the response.
 
@@ -132,7 +139,7 @@ STATUS_INVALID_AMOUNT
 STATUS_BUSY
 ```
 
-#### Checking the terminal status
+#### 1.3 Checking the terminal status
 
 Browse the terminal's IP address with 8080 port number in the same network to ensure the terminal status. 
 
@@ -143,6 +150,70 @@ If the device is online with the local network, the URL will respond as below or
 ![](https://i.imgur.com/ESCsDb3.png)
 
 This will show the connected POS hosts from the internal and external network sources using LAN and WAN.
+
+#### 2.0 External connection through WAN Network
+
+The below explanation can guide you to establish a connection between the host system and the ECR terminal using an external (WAN - Wide Area Network) network/internet.
+
+#### 2.1 Establishing connection between  ECR terminal and the host system through WAN
+
+1. Initiate a WebSocket connection to our centralized ECR network with the token and POS name.
+
+* Centralized ECR network: **ws://ecr.payable.lk**
+* Token: **4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=**
+* POS host name:  **ARPICO-1** - This is the name of your current POS system.
+
+Example:
+
+```
+ws://ecr.payable.lk?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1
+```
+
+Once the connection is established, the implemented WebSocket client will be notified as the server accepted the handshake and opened the socket connection by triggering the `onOpen` method.
+
+In the below situations handshake will be failed:
+
+1. Token and POS/Host name are not provided
+
+Error:
+
+> HTTP/1.1 400 Bad Request
+
+Example:
+
+```
+Error during WebSocket handshake: Unexpected response code: 400
+```
+
+2. Token is invalid
+
+Error:
+
+> HTTP/1.1 401 Unauthorized
+
+Example:
+
+```
+Error during WebSocket handshake: Unexpected response code: 401
+```
+
+Some clients can identify the response code 401 as invalid authentication
+
+```
+HTTP Authentication failed; no valid credentials available
+```
+
+3. POS name is duplicate and already in use
+
+Error:
+
+> HTTP/1.1 429 Too Many Requests
+
+Example:
+
+```
+Error during WebSocket handshake: Unexpected response code: 429
+```
 
 <hr>
 
