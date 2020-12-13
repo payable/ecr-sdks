@@ -157,7 +157,7 @@ STATUS_BUSY
 
 The below explanation can guide you to establish a connection between the host system and the ECR terminal using an external (WAN - Wide Area Network) network/internet.
 
-#### 2.1 Establishing connection between  ECR terminal and the host system through WAN
+#### 2.1 Establishing connection between ECR terminal and the host system through WAN
 
 2.1.1 Initiate a WebSocket connection to our centralized ECR network with the token and POS name.
 
@@ -286,7 +286,7 @@ STATUS_TERMINAL_UNAUTHORIZED
 
 #### 3 ECR Android Service
 
-ECR Android service is running in the terminal to expose the ECR facilities to the terminal.
+ECR Android service is running in the terminal to expose the ECR facilities.
 
 #### 3.1 Auth Code
 
