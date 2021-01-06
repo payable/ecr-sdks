@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ $1 == "debug" ]
+then
+    mvnDebug exec:java -Dexec.mainClass="org.App"
+elif [ $1 == "run" ]
+then
+    mvn clean javafx:run
+fi

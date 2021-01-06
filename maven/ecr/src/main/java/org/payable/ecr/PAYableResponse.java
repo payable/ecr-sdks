@@ -20,6 +20,7 @@ public class PAYableResponse {
     public String tid;
     public String transaction_type;
     public String card_name;
+    public String card_no;
     public String card_type;
     public String approval_code;
     public String server_time;
