@@ -23,7 +23,7 @@ class DemoInternal {
         try {
 
             // Terminal IP Address, Token, POS-Name
-            ecrTerminal = new ECRTerminal("192.168.1.9", "4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=", "JAVA-POS",
+            ecrTerminal = new ECRTerminal("192.168.1.16", "4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=", "JAVA-POS",
                     new ECRTerminal.Listener() {
 
                         @Override

@@ -24,6 +24,8 @@
             <groupId>org.payable</groupId>
             <artifactId>ecr</artifactId>
             <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/ecr-1.0.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
