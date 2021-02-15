@@ -15,7 +15,7 @@ public class App {
 
         try {
 
-            ECRTerminal ecrTerminal = new ECRTerminal("4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw", "JAVA", new ECRTerminal.Listener() {
+            ECRTerminal ecrTerminal = new ECRTerminal("127.0.0.1","4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw", "JAVA", new ECRTerminal.Listener() {
 
                 @Override
                 public void onOpen(String s) {
