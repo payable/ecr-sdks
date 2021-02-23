@@ -30,12 +30,12 @@ The below explanation can guide you to establish a connection between the host s
 Initiate a WebSocket connection to the terminal's LAN IP address if both are in the same network, let's assume the example IP address of the terminal as `192.168.8.101` then the address would be starting with `ws://` and the ECR port number is **45454**.
 
 * Token: **4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=**
-* POS host name:  **ARPICO-1** - This is the name of your current POS system.
+* POS host name:  **COMPANY-1** - This is the name of your current POS system.
 
 Example:
 
 ```
-ws://192.168.8.101:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1
+ws://192.168.8.101:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=COMPANY-1
 ```
 
 Once the connection is established, the host system will be notified from the implemented WebSocket client with a success message from the terminal as below. 
@@ -44,7 +44,7 @@ Once the connection is established, the host system will be notified from the im
 {
    "origin":"PP35271812000161",
    "request":{
-      "origin":"ARPICO-1"
+      "origin":"COMPANY-1"
    },
    "status":"STATUS_TERMINAL_AUTHORIZED"
 }
@@ -225,12 +225,12 @@ The below explanation can guide you to establish a connection between the host s
 
 * Centralized ECR network: **ws://ecr.payable.lk**
 * Token: **4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=**
-* POS host name:  **ARPICO-1** - This is the name of your current POS system.
+* POS host name:  **COMPANY-1** - This is the name of your current POS system.
 
 Example:
 
 ```
-ws://ecr.payable.lk?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1
+ws://ecr.payable.lk?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=COMPANY-1
 ```
 
 Once the connection is established, the implemented WebSocket client will be notified as the server accepted the handshake and opened the socket connection by triggering the `onOpen` method.
@@ -303,7 +303,7 @@ Example successful auth response:
    "request":{
       "auth_code":44280,
       "external":true,
-      "origin":"ARPICO-1",
+      "origin":"COMPANY-1",
       "terminal":"PP35271812000161"
    },
    "status":"STATUS_TERMINAL_AUTHORIZED"
@@ -569,7 +569,7 @@ class Demo {
 Establishing connection
 
 ```javascript
-let  ws  =  new  WebSocket('ws://192.168.8.101:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1')
+let  ws  =  new  WebSocket('ws://192.168.8.101:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=COMPANY-1')
 
 ws.onopen  = () =>  console.log("Connection is opened")
 
@@ -597,7 +597,7 @@ Refer the examples for HTML and JavaScript implementations
 import websocket
 
 ws = websocket.WebSocket()
-ws.connect('ws://192.168.8.101:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1')
+ws.connect('ws://192.168.8.101:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=COMPANY-1')
 ws.send('{"amount":20,"endpoint":"PAYMENT","method":"CARD","order_tracking":"example_sale_from_test","receipt_email":"customer@gmail.com","receipt_sms":"0777777777","id":1}')
 while(True):
     result = ws.recv()
@@ -623,7 +623,7 @@ adb forward tcp:45454 tcp:45454
 3. When you connect the terminal through USB, you have to provide the IP address as `127.0.0.1`
 
 ```
-ws://127.0.0.1:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=ARPICO-1
+ws://127.0.0.1:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=COMPANY-1
 ```
 
 ### USB connection Using PAYable Java ECR SDK
