@@ -201,7 +201,7 @@ If the device is online with the local network, the URL will respond as below or
 
 This will show the connected POS hosts from the internal and external network sources using LAN and WAN.
 
-#### 1.4 Transaction status types
+#### 1.4 Response status types
 
 ```
 STATUS_TERMINAL_AUTHORIZED
@@ -212,7 +212,20 @@ STATUS_API_UNREACHABLE
 STATUS_FAILED
 STATUS_NOT_LOGIN
 STATUS_INVALID_AMOUNT
+STATUS_INVALID_DATA
 STATUS_BUSY
+```
+
+1.4.1 If the request data does not contain required fields or not a valid JSON the below status will be thrown with the error message.
+
+```
+STATUS_INVALID_DATA
+```
+
+1.4.2 If the PAYable application is not available on the terminal or the version of the application does not meet the requirement.
+
+```
+STATUS_API_UNREACHABLE
 ```
 
 #### 2. External connection through WAN Network
