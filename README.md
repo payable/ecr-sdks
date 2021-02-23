@@ -21,7 +21,7 @@ The server is implemented based on these WebSocket protocol versions
 
 Refer to the Mozilla [WebSocket APIs](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) to write your WebSocket client or use any libraries available based on the above protocol versions.
 
-#### 1 Internal connection through LAN Network
+#### 1. Internal connection through LAN Network
 
 The below explanation can guide you to establish a connection between the host system and the ECR terminal using an internal (LAN - Local Area Network) network.
 
@@ -64,6 +64,8 @@ Error during WebSocket handshake: Unexpected response code: 404
 
 #### 1.2 Sending payment request to the ECR terminal
 
+1.2.1 Card payment
+
 Adjust the below JSON request as per the payment details, send as plain text to the connected terminal and wait for the response.
 
 Example request:
@@ -97,10 +99,9 @@ Example successful response:
       "id":1,
       "method":"CARD",
       "order_tracking":"example_sale_from_test",
-      "origin":"ARPICO-1",
+      "origin":"COMPANY-1",
       "receipt_email":"customer@gmail.com",
-      "receipt_sms":"0777777777",
-      "txid":14526
+      "receipt_sms":"0777777777"
    },
    "server_time":"2020-12-12 01:30:55 AM",
    "status":"STATUS_SUCCESS",
@@ -122,10 +123,67 @@ Example failure response:
       "id":1,
       "method":"CARD",
       "order_tracking":"example_sale_from_test",
-      "origin":"ARPICO-1",
+      "origin":"COMPANY-1",
       "receipt_email":"customer@gmail.com",
-      "receipt_sms":"0777777777",
-      "txid":14526
+      "receipt_sms":"0777777777"
+   },
+   "status":"STATUS_FAILED"
+}
+```
+
+1.2.2 Wallet payment
+
+Example request:
+
+```json
+{
+   "id":1,
+   "amount": 20.00,
+   "endpoint": "PAYMENT",
+   "method": "WALLET",
+   "mobile_no": "0777777777",
+   "bill_no": "unique_no",
+   "print_receipt": "YES"
+}
+```
+
+Example successful response:
+
+```json
+{
+   "rrn":"408809",
+   "tid":"24343227",
+   "mid":"242332553252353",
+   "origin":"PP35271812000161",
+   "request":{
+      "amount":20.0,
+      "bill_no":"unique_no",
+      "endpoint":"PAYMENT",
+      "id":1,
+      "method":"WALLET",
+      "mobile_no":"0777777777",
+      "origin":"COMPANY-1",
+      "print_receipt":"YES"
+   },
+   "status":"STATUS_SUCCESS"
+}
+```
+
+Example failure response:
+
+```json
+{
+   "error":"Duplicate Bill number",
+   "origin":"PP35271812000161",
+   "request":{
+      "amount":20.0,
+      "bill_no":"unique_no",
+      "endpoint":"PAYMENT",
+      "id":1,
+      "method":"WALLET",
+      "mobile_no":"0777777777",
+      "origin":"COMPANY-1",
+      "print_receipt":"YES"
    },
    "status":"STATUS_FAILED"
 }
@@ -157,7 +215,7 @@ STATUS_INVALID_AMOUNT
 STATUS_BUSY
 ```
 
-#### 2 External connection through WAN Network
+#### 2. External connection through WAN Network
 
 The below explanation can guide you to establish a connection between the host system and the ECR terminal using an external (WAN - Wide Area Network) network/internet.
 
@@ -274,7 +332,18 @@ STATUS_TERMINAL_AUTHORIZED_ALREADY
 
 The process is same as the LAN request/response that we already explained above in 1.2.
 
-Additionally, you will get the below status when you send a payment request to a terminal that is not connected to the ECR network and online.
+Additionally you need to add terminal in each request as below.
+
+```json
+{
+    "terminal": "PP35271812000161",
+    ...
+}
+```
+
+Please check out the JavaScript example to [learn more.](http://ecr-git-demo.payable.lk/html)
+
+You will get the below status when you send a payment request to a terminal that is not connected to the ECR network and online.
 
 ```
 STATUS_TERMINAL_UNREACHABLE
@@ -290,7 +359,7 @@ STATUS_TERMINAL_UNAUTHORIZED
 
 <hr>
 
-#### 3 ECR Android Service
+#### 3. ECR Android Service
 
 ECR Android service is running in the terminal to expose the ECR facilities.
 
