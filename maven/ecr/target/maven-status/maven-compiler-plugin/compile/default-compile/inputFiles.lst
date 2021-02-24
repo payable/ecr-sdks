@@ -1,6 +1,7 @@
-/home/aslam/PAYable/ecr-sdks/maven/ecr/src/main/java/org/payable/ecr/demo/DemoInternal.java
-/home/aslam/PAYable/ecr-sdks/maven/ecr/src/main/java/org/payable/ecr/PAYableRequest.java
-/home/aslam/PAYable/ecr-sdks/maven/ecr/src/main/java/org/payable/ecr/PAYableResponse.java
-/home/aslam/PAYable/ecr-sdks/maven/ecr/src/main/java/org/payable/ecr/ECRTerminal.java
-/home/aslam/PAYable/ecr-sdks/maven/ecr/src/main/java/org/payable/ecr/demo/DemoExternal.java
-/home/aslam/PAYable/ecr-sdks/maven/ecr/src/main/java/org/payable/ecr/demo/DemoUSB.java
+/home/aslam/Desktop/ecr-projects/ecr-sdks/maven/ecr/src/main/java/org/payable/ecr/demo/DemoInternal.java
+/home/aslam/Desktop/ecr-projects/ecr-sdks/maven/ecr/src/main/java/org/payable/ecr/demo/DemoExternal.java
+/home/aslam/Desktop/ecr-projects/ecr-sdks/maven/ecr/src/main/java/org/payable/ecr/PAYableDiscount.java
+/home/aslam/Desktop/ecr-projects/ecr-sdks/maven/ecr/src/main/java/org/payable/ecr/ECRTerminal.java
+/home/aslam/Desktop/ecr-projects/ecr-sdks/maven/ecr/src/main/java/org/payable/ecr/PAYableResponse.java
+/home/aslam/Desktop/ecr-projects/ecr-sdks/maven/ecr/src/main/java/org/payable/ecr/PAYableRequest.java
+/home/aslam/Desktop/ecr-projects/ecr-sdks/maven/ecr/src/main/java/org/payable/ecr/demo/DemoUSB.java

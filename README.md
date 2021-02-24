@@ -75,10 +75,11 @@ Example request:
    "amount": 20.00,
    "endpoint": "PAYMENT",
    "method": "CARD",
-   "order_tracking": "example_sale_from_test",
-   "receipt_email": "customer@gmail.com",
-   "receipt_sms": "0777777777",
-   "id": 14526
+
+   "order_tracking": "example_sale_from_test", // any tracking reference data - optional
+   "receipt_email": "customer@gmail.com", // customer email - optional
+   "receipt_sms": "0777777777", // customer phone number - optional
+   "id": 14526 // any numeric reference id - optional
 }
 ```
 When the payment gets succeeded or failed, the ECR terminal will send the response back to the requested host system with the request, so the response will be received to the host system if it's listening to the response message.
@@ -137,13 +138,14 @@ Example request:
 
 ```json
 {
-   "id":1,
    "amount": 20.00,
    "endpoint": "PAYMENT",
    "method": "WALLET",
-   "mobile_no": "0777777777",
-   "bill_no": "unique_no",
-   "print_receipt": "YES"
+
+   "id":1, // any numeric reference id - optional
+   "mobile_no": "0777777777", // customer mobile number - optional
+   "bill_no": "unique_no", // unique reference no - optional
+   "print_receipt": "YES" // YES | NO - optional
 }
 ```
 
@@ -188,8 +190,125 @@ Example failure response:
    "status":"STATUS_FAILED"
 }
 ```
+#### 1.3 Sending discount payment request to the ECR terminal
 
-#### 1.3 Checking the terminal status through LAN
+The discount is applied based on the card bin numbers that you set to the terminal. If the payee's card matched with the given bin ranges the amount will be applied as per the discount amount otherwise you can take the decision to reject the card or continue with the default payment amount.
+
+Example request:
+
+```json
+{
+   "endpoint":"PAYMENT",
+   "amount":100,
+   "id":1, // any numeric reference id - optional
+   "method":"CARD",
+   "discounts":[
+      {
+         "name":"COMMERCIAL-CREDIT-CARD",
+         "amount":55.05,
+         "bin_ranges":[
+            432571,
+            432572,
+            437840,
+            510484,
+            550489
+         ]
+      }
+   ]
+}
+```
+
+As per the above request, if the payee's card bin number does not match with the above discount bin ranges, the default amount 100 will be proceeded, or if it matches then the 55.05 amount will be proceeded.
+
+But if you want to stop the payment process if the payee's card number does not match with any given discount bin ranges you need to add the below property to the request.
+
+```json
+"discounts_only":"YES"
+```
+
+The responses are sent back to you based on your requests, the below are example responses;
+
+1. When the card matches with the given discount ranges you will get the applied discount in `applied_discount` property:
+
+```json
+{
+   "applied_discount":{
+      "amount":55.05,
+      "bin_ranges":[
+         432571,
+         432572,
+         437840,
+         510484,
+         550489
+      ],
+      "name":"COMMERCIAL-CREDIT-CARD"
+   },
+   "approval_code":"408809",
+   "card_name":"SOMENAME/S",
+   "card_no":"4325-7200-XXXX-3006",
+   "card_type":"VISA",
+   "mid":"000000000000101",
+   "origin":"PP352720A1004626",
+   "request":{
+      "amount":100.0,
+      "discounts":[
+         {
+            "amount":55.05,
+            "bin_ranges":[
+               432571,
+               432572,
+               437840,
+               510484,
+               550489
+            ],
+            "name":"COMMERCIAL-CREDIT-CARD"
+         }
+      ],
+      "endpoint":"PAYMENT",
+      "id":1,
+      "method":"CARD",
+      "origin":"COMPANY-1"
+   },
+   "server_time":"2021-02-24 09:47:43 AM",
+   "status":"STATUS_SUCCESS",
+   "tid":"00000101",
+   "transaction_type":"EMV",
+   "txid":413455
+}
+```
+
+2. If you set this property to YES `"discounts_only":"YES"` and the card does not match with the discount ranges:
+
+```json
+{
+   "error":"Discount is not available",
+   "origin":"PP352720A1004626",
+   "request":{
+      "amount":100.0,
+      "discounts":[
+         {
+            "amount":55.05,
+            "bin_ranges":[
+               432571,
+               432572,
+               437840,
+               510484,
+               550489
+            ],
+            "name":"COMMERCIAL-CREDIT-CARD"
+         }
+      ],
+      "discounts_only":"YES",
+      "endpoint":"PAYMENT",
+      "id":1,
+      "method":"CARD",
+      "origin":"COMPANY-1"
+   },
+   "status":"STATUS_FAILED"
+}
+```
+
+#### 1.4 Checking the terminal status through LAN
 
 Browse the terminal's IP address with 8080 port number in the same network to ensure the terminal status. 
 
@@ -201,7 +320,7 @@ If the device is online with the local network, the URL will respond as below or
 
 This will show the connected POS hosts from the internal and external network sources using LAN and WAN.
 
-#### 1.4 Response status types
+#### 1.5 Response status types
 
 ```
 STATUS_TERMINAL_AUTHORIZED
@@ -216,13 +335,13 @@ STATUS_INVALID_DATA
 STATUS_BUSY
 ```
 
-1.4.1 If the request data does not contain required fields or not a valid JSON the below status will be thrown with the error message.
+1.5.1 If the request data does not contain required fields or not a valid JSON the below status will be thrown with the error message.
 
 ```
 STATUS_INVALID_DATA
 ```
 
-1.4.2 If the PAYable application is not available on the terminal or the version of the application does not meet the requirement.
+1.5.2 If the PAYable application is not available on the terminal or the version of the application does not meet the requirement.
 
 ```
 STATUS_API_UNREACHABLE
@@ -517,13 +636,19 @@ class Demo {
                     // 1. Construct the sale request object
                     PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, 252, 256.00, PAYableRequest.METHOD_CARD);
 
-                    // 2. Convert to JSON
-                    String jsonRequest = request.toJson();
+                    // If you want to add a discount options to the request
+                    // request.addDiscount(new PAYableDiscount("COM", 10, 432572, 435262, 432572));
 
-                    // 3. Send to terminal
-                    ecrTerminal.send(jsonRequest);
+                    // 2. Send to terminal
+                    ecrTerminal.send(request.toJson());
 
-                    // 4. Expect the reponse at 'onMessage' method
+                    // 3. Expect the response at 'onMessage' method
+
+                    // If you want to stop the ongoing payment process in LAN/USB
+                    // ecrTerminal.send(PAYableRequest.stop());
+
+                    // If you want to stop the ongoing payment process in WAN
+                    // ecrTerminal.send(PAYableRequest.stop("PP352720A1004626"));
                 }
 
                 @Override

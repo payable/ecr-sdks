@@ -12,7 +12,6 @@ import org.payable.ecr.PAYableResponse;
 
 /**
  * PAYable SDK Demo - External (WAN)
- *
  */
 class DemoExternal {
 
@@ -25,75 +24,78 @@ class DemoExternal {
             // Token & POS-Name
             ecrTerminal = new ECRTerminal("4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=", "JAVA-POS", new ECRTerminal.Listener() {
 
-                        @Override
-                        public void onOpen(String data) {
+                @Override
+                public void onOpen(String data) {
+
+                    /*
+                     * After the connection is successfully established you can start to send sale
+                     * request to terminal.
+                     *
+                     * Request in JSON: {"endpoint":"PAYMENT","terminal":"PP352720A1004626",
+                     * "amount":20,"id":1,"method":"CARD","order_tracking":
+                     * "some_id","receipt_email":"aslam@payable.lk","receipt_sms":"0762724081"}
+                     *
+                     */
+
+                    // 1. Construct the sale request object
+                    PAYableRequest request = new PAYableRequest("PP352720A1004626", PAYableRequest.ENDPOINT_PAYMENT, 252, 256.00, PAYableRequest.METHOD_CARD);
+
+                    // If you want to add a discount options to the request
+                    // request.addDiscount(new PAYableDiscount("COM", 10, 432572, 435262, 432572));
+
+                    // 2. Send to terminal
+                    ecrTerminal.send(request.toJson());
+
+                    // 3. Expect the response at 'onMessage' method
+
+                    // If you want to stop the ongoing payment process in LAN/USB
+                    // ecrTerminal.send(PAYableRequest.stop());
+
+                    // If you want to stop the ongoing payment process in WAN
+                    // ecrTerminal.send(PAYableRequest.stop("PP352720A1004626"));
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+
+                }
+
+                @Override
+                public void onMessage(String message) {
+
+                    // Map JSON to Java object (optional) or handle from String data
+                    try {
+
+                        PAYableResponse response = PAYableResponse.from(message);
+                        System.out.println("RESPONSE: " + response.status);
+
+                        if (response.status.equals(PAYableResponse.STATUS_TERMINAL_UNAUTHORIZED)) {
 
                             /*
-                             * After the connection is successfully established you can start to send sale
-                             * request to terminal.
-                             * 
-                             * Request in JSON: {"endpoint":"PAYMENT",
-                             * "amount":20,"id":1,"method":"CARD","order_tracking":
-                             * "some_id","receipt_email":"aslam@payable.lk","receipt_sms":"0762724081",
-                             * "txid":14526}
-                             * 
+                             * Sending authentication request
+                             *
+                             * Request in JSON: {"terminal":"PP352720A1004626","auth_code":51556 }
+                             *
                              */
-
-                            // 1. Construct the sale request object
-                            PAYableRequest request = new PAYableRequest("PP35271812000161",
-                                    PAYableRequest.ENDPOINT_PAYMENT, 252, 256.00, PAYableRequest.METHOD_CARD);
-
-                            // 2. Convert to JSON
-                            String jsonRequest = request.toJson();
-
-                            // 3. Send to terminal
-                            ecrTerminal.send(jsonRequest);
-
-                            // 4. Expect the reponse at 'onMessage' method
-
+                            PAYableRequest request = new PAYableRequest("PP352720A1004626", 51556);
+                            ecrTerminal.send(request.toJson());
                         }
 
-                        @Override
-                        public void onClose(int code, String reason, boolean remote) {
+                    } catch (JsonSyntaxException ex) {
+                        // Invalid JSON
+                    }
+                }
 
-                        }
+                @Override
+                public void onMessage(ByteBuffer message) {
+                    // Optional implementation
+                }
 
-                        @Override
-                        public void onMessage(String message) {
-
-                            // Map JSON to Java object (optional) or handle from String data
-                            try {
-
-                                PAYableResponse response = PAYableResponse.from(message);
-                                System.out.println("RESPONSE: " + response.status);
-
-                                if (response.status.equals("STATUS_TERMINAL_UNAUTHORIZED")) {
-
-                                    /*
-                                     * Sending authentication request
-                                     * 
-                                     * Request in JSON: {"terminal":"PP35271812000161","auth_code":44280 }
-                                     * 
-                                     */
-                                    PAYableRequest request = new PAYableRequest("PP35271812000161", 44280);
-                                    ecrTerminal.send(request.toJson());
-                                }
-
-                            } catch (JsonSyntaxException ex) {
-                                // Invalid JSON
-                            }
-                        }
-
-                        @Override
-                        public void onMessage(ByteBuffer message) {
-                            // Optional implementation
-                        }
-
-                        @Override
-                        public void onError(Exception ex) {
-                            // Handle connection exceptions
-                        }
-                    });
+                @Override
+                public void onError(Exception ex) {
+                    // Handle connection exceptions
+                }
+            });
 
             // Just for the console print
             ecrTerminal.debug = true;
