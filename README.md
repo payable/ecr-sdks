@@ -725,7 +725,7 @@ ws.send(`{"endpoint":"PAYMENT","amount":20.00,"id":1,"method":"CARD","order_trac
 ```
 
 Refer the examples for HTML and JavaScript implementations 
-[payable.github.io/ecr-sdks/html](https://payable.github.io/ecr-sdks/html/)
+[payable.github.io/ecr-sdks/html](http://payable.github.io/ecr-sdks/html/)
 
 <hr>
 
