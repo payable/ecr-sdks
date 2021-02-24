@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>ECR - Internal (LAN) Stop Process</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <a style="text-decoration: none;" href="index.html">Home</a>
+    <h3>PAYable ECR Demonstration - Internal (LAN) Stop Process</h3>
+    <form action="#" onsubmit="event.preventDefault();sendPaymentRequest()">
+        <p><label>Terminal address</label> <br /> <input style="max-width: 651px;width: 100%;" value="ws://192.168.1.16:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=COMPANY-1" required type="text" id="address" /></p>
+        <p><textarea required rows="10" cols="80" id="textarea">{"endpoint":"STOP"}</textarea></p>
+        <input type="button" value="Connect / Disconnect" onclick="connection()" />
+        <input type="submit" value="Send stop request" />
+    </form>
+    <pre>
+        <ul id="result"></ul>        
+    </pre>
+</body>
+
+</html>

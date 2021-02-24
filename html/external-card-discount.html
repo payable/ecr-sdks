@@ -13,8 +13,12 @@
     <a style="text-decoration: none;" href="index.html">Home</a>
     <h3>PAYable ECR Demonstration - External (WAN) Card Discount Sale</h3>
     <form action="#" onsubmit="event.preventDefault();sendPaymentRequest()">
-        <p><label>Terminal address</label> <br /> <input style="max-width: 598px;width: 100%;" value="ws://ecr.payable.lk?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=COMPANY-1" required type="text" id="address" /></p>
-        <p><textarea required rows="42" cols="73" id="textarea">{"terminal":"PP352720A1004626","endpoint":"PAYMENT","amount":20.00,"id":1,"method":"CARD","order_tracking":"some_id","receipt_email":"test@test.com","receipt_sms":"0777777777","discounts_only":"YES","discounts":[{"name":"COMMERCIAL-CREDIT-CARD","amount":55.05,"bin_ranges":[432571,432572,437840,510484,550489,550490,550598,552773,559574,559576,496699,421689,535927,553806,559728,450089,476673,626233,626234,626235,629176,629177]}]}</textarea></p>
+        <p><label>Terminal address</label> <br /> <input style="max-width: 614px;width: 100%;" value="ws://ecr.payable.lk?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=COMPANY-1" required type="text" id="address" /></p>
+        <p><textarea required rows="25" cols="75" id="textarea">{"terminal":"PP352720A1004626","endpoint":"PAYMENT","amount":20.00,"id":1,"method":"CARD","order_tracking":"some_id","receipt_email":"test@test.com","receipt_sms":"0777777777","discounts_only":"YES","discounts":[{"name":"COMMERCIAL-CREDIT-CARD","amount":55.05,"bin_ranges":[432571,432572,437840,510484,550489]}]}</textarea></p>
+        <ul>
+            <li><strong>discounts:</strong> list of discounts (name, amount, bin_ranges)</li>
+            <li><strong>discounts_only:</strong> YES - Reject if the card number does not match the discount bin ranges - optional</li>
+        </ul>
         <input type="button" value="Server - Connect / Disconnect" onclick="connection()" />
         <input type="submit" value="Send payment request" />
     </form>

@@ -14,7 +14,11 @@
     <h3>PAYable ECR Demonstration - Internal (LAN) Card Discount Sale</h3>
     <form action="#" onsubmit="event.preventDefault();sendPaymentRequest()">
         <p><label>Terminal address</label> <br /> <input style="max-width: 651px;width: 100%;" value="ws://192.168.1.16:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=COMPANY-1" required type="text" id="address" /></p>
-        <p><textarea required rows="40" cols="80" id="textarea">{"endpoint":"PAYMENT","amount":100,"id":1,"method":"CARD","order_tracking":"some_id","receipt_email":"test@test.com","receipt_sms":"0777777777","discounts_only":"YES","discounts":[{"name":"COMMERCIAL-CREDIT-CARD","amount":55.05,"bin_ranges":[432571,432572,437840,510484,550489,550490,550598,552773,559574,559576,496699,421689,535927,553806,559728,450089,476673,626233,626234,626235,629176,629177]}]}</textarea></p>
+        <p><textarea required rows="24" cols="80" id="textarea">{"endpoint":"PAYMENT","amount":100,"id":1,"method":"CARD","order_tracking":"some_id","receipt_email":"test@test.com","receipt_sms":"0777777777","discounts_only":"YES","discounts":[{"name":"COMMERCIAL-CREDIT-CARD","amount":55.05,"bin_ranges":[432571,432572,437840,510484,550489]}]}</textarea></p>
+        <ul>
+            <li><strong>discounts:</strong> list of discounts (name, amount, bin_ranges)</li>
+            <li><strong>discounts_only:</strong> YES - Reject if the card number does not match the discount bin ranges - optional</li>
+        </ul>
         <input type="button" value="Connect / Disconnect" onclick="connection()" />
         <input type="submit" value="Send payment request" />
     </form>
