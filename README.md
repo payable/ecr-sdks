@@ -515,7 +515,7 @@ POS/Host systems that are authorized already would be listed here in the ECR app
 
 ### Java SDK Integration 
 
-1. Copy or include the ECR JAR library [ecr-1.0.jar](https://github.com/payable/ecr-sdks/raw/master/maven/maven-test/lib/ecr-1.0.jar) to the Java libs folder of your Java project.
+1. Copy or include the ECR JAR library [ecr-1.1.jar](https://github.com/payable/ecr-sdks/raw/master/maven/maven-test/lib/ecr-1.1.jar) to the Java libs folder of your Java project.
 
 2. Construct the `ECRTerminal` object with IP address, token, POS host name and implement the listener interface.
 
