@@ -316,7 +316,7 @@ Example: `http://192.168.8.101:8080`
 
 If the device is online with the local network, the URL will respond as below or else it won't respond anything since the terminal is offline.
 
-![](https://i.imgur.com/ESCsDb3.png)
+![](https://i.imgur.com/JosAnMu.png)
 
 This will show the connected POS hosts from the internal and external network sources using LAN and WAN.
 
@@ -511,7 +511,7 @@ The auth code can be revoked from the below option in the ECR application of the
 
 POS/Host systems that are authorized already would be listed here in the ECR application of the terminal, it can be removed from the terminal using the remove button which also removes the absolute authorizations of those POS/Host systems.
 
-![](https://i.imgur.com/GrUiaCa.png)
+![](https://i.imgur.com/NE0EBN8.png)
 
 ### Java SDK Integration 
 
