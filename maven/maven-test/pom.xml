@@ -6,9 +6,10 @@
 
     <groupId>org.demo</groupId>
     <artifactId>ecr</artifactId>
+    <packaging>jar</packaging>
     <version>1.0</version>
-
     <name>ecr</name>
+
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
