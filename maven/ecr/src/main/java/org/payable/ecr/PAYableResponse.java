@@ -14,6 +14,7 @@ public class PAYableResponse {
     public static final String STATUS_TERMINAL_AUTHORIZED = "STATUS_TERMINAL_AUTHORIZED";
     public static final String STATUS_TERMINAL_UNAUTHORIZED = "STATUS_TERMINAL_UNAUTHORIZED";
     public static final String STATUS_TERMINAL_UNREACHABLE = "STATUS_TERMINAL_UNREACHABLE";
+    public static final String STATUS_INVALID_AUTHCODE = "STATUS_INVALID_AUTHCODE";
     public static final String STATUS_MAX_AMOUNT_EXCEEDED = "STATUS_MAX_AMOUNT_EXCEEDED";
     public static final String STATUS_INVALID_DATA = "STATUS_INVALID_DATA";
 
