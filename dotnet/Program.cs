@@ -33,7 +33,7 @@ namespace MyApp
 
                 // 1. Connect WebSocket
                 webSocket = new ClientWebSocket();
-                Uri uri = new Uri("ws://" + ip + ":45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=" + posname);
+                Uri uri = new Uri("ws://" + ip + ":3002?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=" + posname);
                 try
                 {
                     await webSocket.ConnectAsync(uri, CancellationToken.None).ConfigureAwait(false);
