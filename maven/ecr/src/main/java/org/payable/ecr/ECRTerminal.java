@@ -46,6 +46,16 @@ public class ECRTerminal extends WebSocketClient {
         this.clientListener = listener;
     }
 
+    public ECRTerminal(String token, String pos, int connectTimeout, Listener listener) throws URISyntaxException, IOException, InterruptedException {
+        super(prepareURI("ecr", token, pos), new Draft_6455(), null, connectTimeout);
+        this.clientListener = listener;
+    }
+
+    public ECRTerminal(String address, String token, String pos, int connectTimeout, Listener listener) throws URISyntaxException, IOException, InterruptedException {
+        super(prepareURI("ecr", token, pos), new Draft_6455(), null, connectTimeout);
+        this.clientListener = listener;
+    }
+
     @Override
     public void onOpen(ServerHandshake handshakeData) {
         consoleLog("new connection opened");
