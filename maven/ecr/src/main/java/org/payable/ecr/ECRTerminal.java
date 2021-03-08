@@ -52,7 +52,7 @@ public class ECRTerminal extends WebSocketClient {
     }
 
     public ECRTerminal(String address, String token, String pos, int connectTimeout, Listener listener) throws URISyntaxException, IOException, InterruptedException {
-        super(prepareURI("ecr", token, pos), new Draft_6455(), null, connectTimeout);
+        super(prepareURI(address, token, pos), new Draft_6455(), null, connectTimeout);
         this.clientListener = listener;
     }
 
