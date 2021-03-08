@@ -6,8 +6,11 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
+import java.util.Map;
 
 import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft;
+import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
 
 public class ECRTerminal extends WebSocketClient {
@@ -26,6 +29,11 @@ public class ECRTerminal extends WebSocketClient {
         void onMessage(ByteBuffer message);
 
         void onError(Exception ex);
+    }
+
+    public ECRTerminal(String token, String pos, Listener listener, int timeout) throws URISyntaxException, IOException, InterruptedException {
+        super(prepareURI("ecr", token, pos), new Draft_6455(), null, timeout);
+        this.clientListener = listener;
     }
 
     public ECRTerminal(String token, String pos, Listener listener) throws URISyntaxException, IOException, InterruptedException {
