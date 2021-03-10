@@ -15,20 +15,21 @@ import org.payable.ecr.ECRTerminal;
 import org.payable.ecr.PAYableRequest;
 import org.payable.ecr.PAYableResponse;
 import org.payable.ecrclient.services.MySocketWebServer;
-import org.payable.ecrclient.services.SoundUtils;
 import org.payable.ecrclient.services.StaticMemory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.BufferedReader;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 
-import static java.awt.Frame.*;
+import static java.awt.Frame.ICONIFIED;
+import static java.awt.Frame.NORMAL;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.showMessageDialog;
 
