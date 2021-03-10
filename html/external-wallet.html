@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>ECR - External (WAN) Wallet Sale</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <a style="text-decoration: none;" href="index.html">Home</a>
+    <h3>PAYable ECR Demonstration - External (WAN) Wallet Sale</h3>
+    <form action="#" onsubmit="event.preventDefault();sendPaymentRequest()">
+        <p><label>Terminal address</label> <br /> <input style="max-width: 614px;width: 100%;" value="ws://ecr.payable.lk?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=COMPANY-1" required type="text" id="address" /></p>
+        <p><textarea required rows="10" cols="75" id="textarea">{"terminal":"PP352720A1004626","endpoint":"PAYMENT","amount":20.00,"id":1,"method":"WALLET","mobile_no":"0762724081","bill_no":"unique_no_1","print_receipt" : "YES"}</textarea></p>
+        <ul>
+            <li><strong>terminal:</strong> terminal's serial number</li>
+            <li><strong>endpoint:</strong> PAYMENT</li>
+            <li><strong>amount:</strong> minimum 1</li>
+            <li><strong>method:</strong> WALLET</li>
+            <br />
+            <li><strong>id:</strong> any numeric reference id - optional</li>
+            <li><strong>mobile_no:</strong> customer mobile number - optional</li>
+            <li><strong>bill_no:</strong> unique reference no - optional</li>
+            <li><strong>print_receipt:</strong> YES | NO - optional</li>
+        </ul>
+        <input type="button" value="Server - Connect / Disconnect" onclick="connection()" />
+        <input type="submit" value="Send payment request" />
+    </form>
+    <pre>
+        <ul id="result"></ul>        
+    </pre>
+</body>
+
+</html>

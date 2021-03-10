@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>ECR - External (WAN) Stop Process</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <a style="text-decoration: none;" href="index.html">Home</a>
+    <h3>PAYable ECR Demonstration - External (WAN) Stop Process</h3>
+    <form action="#" onsubmit="event.preventDefault();sendPaymentRequest()">
+        <p><label>Terminal address</label> <br /> <input style="max-width: 614px;width: 100%;" value="ws://ecr.payable.lk?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=COMPANY-1" required type="text" id="address" /></p>
+        <p><textarea required rows="10" cols="75" id="textarea">{"terminal":"PP352720A1004626","endpoint":"STOP"}</textarea></p>
+        <input type="button" value="Connect / Disconnect" onclick="connection()" />
+        <input type="submit" value="Send stop request" />
+    </form>
+    <pre>
+        <ul id="result"></ul>        
+    </pre>
+</body>
+
+</html>
