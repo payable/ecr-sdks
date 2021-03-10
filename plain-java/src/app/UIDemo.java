@@ -99,7 +99,7 @@ public class UIDemo {
                         webSocketClient.close();
                     }
                     try {
-                        URI uri = new URI("ws://192.168.8.103:45454");
+                        URI uri = new URI("ws://192.168.1.16:45454?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=COMPANY-1");
                         webSocketClient = new MyWebSocketClient(uri, new WebSocketListeners.Client() {
                             @Override
                             public void onOpen(ServerHandshake handshakeData) {
@@ -140,10 +140,10 @@ public class UIDemo {
             @Override
             public void actionPerformed(ActionEvent args) {
                 if(socketType == 1) {
-                    socketThread.sendData("From Java");
+                    socketThread.sendData("{\"amount\":20,\"endpoint\":\"PAYMENT\",\"method\":\"CARD\"}");
                 } else {
                     if(webSocketClient != null) {
-                        webSocketClient.send("From Java : " + new Random().nextInt(1000));
+                        webSocketClient.send("{\"amount\":20,\"endpoint\":\"PAYMENT\",\"method\":\"CARD\"}");
                     }
                 }
             }

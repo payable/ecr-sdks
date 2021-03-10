@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\Users\Aslam\Desktop\ecr-sdks\ecr-client-java\platforms\windows-xp-32\sys\jars\ecr.jar</jar>
+  <outfile>C:\Users\Aslam\Desktop\ecr-sdks\ecr-client-java\platforms\windows-xp-32\ecr.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl></downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon>C:\Users\Aslam\Desktop\ecr-sdks\ecr-client-java\platforms\windows-xp-32\icon.ico</icon>
+  <var>ADB=%EXEDIR%\\sys\\bin\\adb-v23.1</var>
+  <var>Path=%Path%;%ADB%</var>
+  <singleInstance>
+    <mutexName>ecr-client</mutexName>
+    <windowTitle>ECR Client - v1.1.1</windowTitle>
+  </singleInstance>
+  <classPath>
+    <mainClass>org.payable.ecrclient.App</mainClass>
+    <cp>sys/jars/httpcore-4.4.4.jar</cp>
+    <cp>sys/jars/httpclient-4.5.10.jar</cp>
+    <cp>sys/jars/commons-logging-1.2.jar</cp>
+    <cp>sys/jars/ecr-1.1.jar</cp>
+  </classPath>
+  <jre>
+    <path>sys</path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <bundledJreAsFallback>false</bundledJreAsFallback>
+    <minVersion></minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>jdkOnly</jdkPreference>
+    <runtimeBits>64/32</runtimeBits>
+  </jre>
+</launch4jConfig>
