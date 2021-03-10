@@ -1,4 +1,4 @@
 *
 !*.zip
 !.gitignore
-!setup.exe
+!setup-win32.exe
