@@ -24,7 +24,7 @@ and the POS should expose an internal PORT to receive the callbacks from the ECR
 
 #### Download ECR Client - [setup-win32.exe](https://github.com/payable/ecr-sdks/raw/master/ecr-client-java/platforms/windows-xp-32/setup-win32.exe)
 
-##### 1. Install ECR Client software in the PC.
+#### 1. Install ECR Client software in the PC.
 
 ![](screenshots/1.png)
 
@@ -36,11 +36,11 @@ and the POS should expose an internal PORT to receive the callbacks from the ECR
 
 ![](screenshots/5.png)
 
-##### Click Unblock/Allow if Windows Firewall ask to grant access to internet.
+#### Click Unblock/Allow if Windows Firewall ask to grant access to internet.
 
 ![](screenshots/6.png)
 
-##### 2. Please follow this step if you want to connect the terminal using USB port.
+#### 2. Please follow this step if you want to connect the terminal using USB port.
 
 2.1 Connect the WPOS terminal with USB cable.
 
@@ -71,7 +71,7 @@ Once you installed all drivers properly, you can see the device is recognized by
 ![](screenshots/13.png)
 
 
-##### 3. Connect the terminal using the ECR Client user interface.
+#### 3. Connect the terminal using the ECR Client user interface.
 
 3.1 Enter the terminal address as an IP address for LAN, serial number for WAN or 127.0.0.1 for USB connection.
 
@@ -91,7 +91,7 @@ You can close this window, and it will be minimized and will be auto connecting 
 
 Now ECR Client is successfully installed and connected with PAYable terminal.
 
-##### 4. Sending Payment request.
+#### 4. Sending Payment request.
 
 4.1 Send JSON HTTP POST request to 45455 port of ECR Client from your project.
 
