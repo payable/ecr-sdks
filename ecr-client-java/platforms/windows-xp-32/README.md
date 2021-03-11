@@ -40,17 +40,21 @@ and the POS should expose an internal PORT to receive the callbacks from the ECR
 
 ![](screenshots/6.png)
 
-#### 2. Please follow this step if you want to connect the terminal using USB port.
+#### 2. Please follow this step if you want to connect the terminal using USB port (for LAN/IP connections this step can be ignored).
 
 2.1 Connect the WPOS terminal with USB cable.
 
 2.2 Find AdbDemo application on the home screen of the WPOS terminal, if not please ask PAYable to grant ADB access to the terminal.
 
+![](screenshots/22.png)
+
 2.3 Tap Enable adb button on the AdbDemo application.
+
+![](screenshots/23.png)
 
 2.4 Install drivers if the device is shown as unknown on the system (Device Manager). 
 
-Many latest Windows versions takes the drivers automatically and install, but you need to manually install for some old versions such as Windows XP.
+Many latest Windows versions take the drivers automatically and install, but you need to manually install for some old versions such as Windows XP.
 
 The below window will appear once you connected the terminal with USB if the drivers are not installed, then follow the below steps.
 
