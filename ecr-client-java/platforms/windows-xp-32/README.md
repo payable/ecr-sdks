@@ -20,7 +20,7 @@ HTTP protocols means that it can support PAYable ECR Client too.
 Since the POS system does not support WebSocket protocol, it can send HTTP requests to the installed ECR Client software, 
 and the POS should expose an internal PORT to receive the callbacks from the ECR Client when the terminal responds.
 
-#### Setup and installation:
+### Setup and installation:
 
 #### Download ECR Client - [setup-win32.exe](https://github.com/payable/ecr-sdks/raw/master/ecr-client-java/platforms/windows-xp-32/setup-win32.exe)
 
