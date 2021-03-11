@@ -45,13 +45,15 @@ public class MainActivity {
     private JTextField textFieldCallbackPort;
     private JCheckBox checkBoxReconnect;
     private JButton buttonStop;
-    private JScrollPane jScrollPaneResponse;
+    private JScrollPane scrollPaneResponse;
     private JTextField textFieldAmount;
     private JButton buttonSend;
     private JComboBox comboBoxType;
     private JLabel labelTerminal;
     private JLabel labelTerminalStatus;
     private JLabel labelConnType;
+    private JTextField textFieldPosName;
+    private JButton buttonShowHideLogs;
     private TrayIcon trayIcon;
 
     private int logLine = 0;
@@ -59,20 +61,23 @@ public class MainActivity {
     private int ecrTerminalHashCode;
     private String address;
     private boolean canReconnect;
-    private int socketConnectTimeout = 1000 * 15;
+    private int socketConnectTimeout = 1000 * 10;
 
     private int STATUS_CONNECTING = 1;
     private int STATUS_CONNECTED = 2;
     private int STATUS_DISCONNECTED = 3;
     private int STATUS_RECONNECTING = 4;
     private int STATUS_NOT_CONNECTED = 5;
+    private int STATUS_CLOSING = 6;
 
     public MainActivity(final JFrame frame) {
 
         this.frame = frame;
         String reconnectPref = StaticMemory.getPrefs().get("reconnect", "");
 
+        scrollPaneResponse.setVisible(false);
         textFieldAddress.setText(StaticMemory.getPrefs().get("terminal", ""));
+        textFieldPosName.setText(StaticMemory.getPrefs().get("pos_name", ""));
         textFieldAuthCode.setText(StaticMemory.getPrefs().get("auth_code", ""));
         textFieldCallbackPort.setText(StaticMemory.getPrefs().get("callback_port", ""));
         checkBoxReconnect.setSelected(reconnectPref.equals("1"));
@@ -116,7 +121,23 @@ public class MainActivity {
                 } else {
                     String method = comboBoxType.getSelectedItem().toString().equalsIgnoreCase("WALLET") ? PAYableRequest.METHOD_WALLET : PAYableRequest.METHOD_CARD;
                     PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, 1, Double.valueOf(textFieldAmount.getText()), method);
+                    if (textFieldAddress.getText().contains("PP")) {
+                        request.terminal = textFieldAddress.getText();
+                    }
                     ecrTerminal.send(request.toJson());
+                }
+            }
+        });
+
+        buttonShowHideLogs.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(scrollPaneResponse.isVisible()) {
+                    frame.setSize(550, 360);
+                    scrollPaneResponse.setVisible(false);
+                } else {
+                    frame.setSize(550, 550);
+                    scrollPaneResponse.setVisible(true);
                 }
             }
         });
@@ -238,7 +259,7 @@ public class MainActivity {
 
     private void connectECR() {
 
-        statusPanelUpdate(STATUS_RECONNECTING);
+        statusPanelUpdate(STATUS_CONNECTING);
 
         logResponse(textFieldAddress.getText() + " is being connected...");
 
@@ -250,7 +271,7 @@ public class MainActivity {
 
             address = textFieldAddress.getText().contains("PP") ? "ecr" : textFieldAddress.getText();
 
-            ecrTerminal = new ECRTerminal(address, "4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw", "ECR-CLIENT", socketConnectTimeout, new ECRTerminal.Listener() {
+            ecrTerminal = new ECRTerminal(address, "4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw", textFieldPosName.getText(), socketConnectTimeout, new ECRTerminal.Listener() {
 
                 @Override
                 public void onOpen(String s) {
@@ -268,7 +289,7 @@ public class MainActivity {
                 }
 
                 @Override
-                public void onClose(int code, String reason, boolean remote) {
+                public void onClose(int code, final String reason, boolean remote) {
 
                     if (ecrTerminal == null || ecrTerminalHashCode != ecrTerminal.hashCode()) return;
 
@@ -299,9 +320,25 @@ public class MainActivity {
                             statusPanelUpdate(STATUS_CONNECTED);
 
                         } else if (response.status.equals("STATUS_TERMINAL_UNREACHABLE")) {
+
                             disconnectECR(1009, "STATUS_TERMINAL_UNREACHABLE");
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showMessageDialog(frame, "STATUS_TERMINAL_UNREACHABLE", "Error", ERROR_MESSAGE);
+                                }
+                            }).start();
+
                         } else if (response.status.equals("STATUS_INVALID_AUTHCODE")) {
+
                             disconnectECR(1009, "STATUS_INVALID_AUTHCODE");
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showMessageDialog(frame, "STATUS_INVALID_AUTHCODE", "Error", ERROR_MESSAGE);
+                                }
+                            }).start();
+
                         } else if (!textFieldCallbackPort.getText().isEmpty()) {
                             sendPost(textFieldCallbackPort.getText(), response.toJson());
                         }
@@ -322,14 +359,6 @@ public class MainActivity {
                     if (ecrTerminal == null || ecrTerminalHashCode != ecrTerminal.hashCode()) return;
 
                     logResponse("onError: " + ex);
-
-                    buttonConnect.setEnabled(true);
-                    textFieldAddress.setEnabled(true);
-                    textFieldAuthCode.setEnabled(true);
-                    textFieldCallbackPort.setEnabled(true);
-                    checkBoxReconnect.setEnabled(true);
-                    buttonDisconnect.setEnabled(false);
-
                     StaticMemory.connectedTerminal = null;
                     statusPanelUpdate(STATUS_DISCONNECTED);
                 }
@@ -341,15 +370,8 @@ public class MainActivity {
             ecrTerminal.connect();
 
         } catch (Exception ex) {
-
             ex.printStackTrace();
-
-            buttonConnect.setEnabled(true);
-            textFieldAddress.setEnabled(true);
-            textFieldAuthCode.setEnabled(true);
-            textFieldCallbackPort.setEnabled(true);
-            checkBoxReconnect.setEnabled(true);
-            buttonDisconnect.setEnabled(false);
+            statusPanelUpdate(STATUS_DISCONNECTED);
         }
     }
 
@@ -361,6 +383,7 @@ public class MainActivity {
 
             buttonConnect.setEnabled(false);
             textFieldAddress.setEnabled(false);
+            textFieldPosName.setEnabled(false);
             textFieldAuthCode.setEnabled(false);
             textFieldCallbackPort.setEnabled(false);
             checkBoxReconnect.setEnabled(false);
@@ -379,6 +402,7 @@ public class MainActivity {
 
             buttonConnect.setEnabled(true);
             textFieldAddress.setEnabled(true);
+            textFieldPosName.setEnabled(true);
             textFieldAuthCode.setEnabled(true);
             textFieldCallbackPort.setEnabled(true);
             checkBoxReconnect.setEnabled(true);
@@ -393,10 +417,11 @@ public class MainActivity {
             labelTerminalStatus.setText("Offline");
             labelTerminalStatus.setForeground(Color.decode("#ff0000"));
 
-        } else if (status == STATUS_CONNECTING) {
+        } else if (status == STATUS_CONNECTING || status == STATUS_RECONNECTING) {
 
             buttonConnect.setEnabled(false);
             textFieldAddress.setEnabled(false);
+            textFieldPosName.setEnabled(false);
             textFieldAuthCode.setEnabled(false);
             textFieldCallbackPort.setEnabled(false);
             checkBoxReconnect.setEnabled(false);
@@ -415,6 +440,7 @@ public class MainActivity {
 
             buttonConnect.setEnabled(true);
             textFieldAddress.setEnabled(true);
+            textFieldPosName.setEnabled(true);
             textFieldAuthCode.setEnabled(true);
             textFieldCallbackPort.setEnabled(true);
             checkBoxReconnect.setEnabled(true);
@@ -427,6 +453,25 @@ public class MainActivity {
 
             labelTerminal.setText("Not ready");
             labelTerminalStatus.setText("Not connected");
+            labelTerminalStatus.setForeground(Color.decode("#ff0000"));
+
+        } else if (status == STATUS_CLOSING) {
+
+            buttonConnect.setEnabled(false);
+            textFieldAddress.setEnabled(false);
+            textFieldPosName.setEnabled(false);
+            textFieldAuthCode.setEnabled(false);
+            textFieldCallbackPort.setEnabled(false);
+            checkBoxReconnect.setEnabled(false);
+            buttonDisconnect.setEnabled(false);
+            buttonStop.setEnabled(false);
+
+            textFieldAmount.setEnabled(false);
+            comboBoxType.setEnabled(false);
+            buttonSend.setEnabled(false);
+
+            labelTerminal.setText(StaticMemory.connectedTerminal != null ? StaticMemory.connectedTerminal : "Not ready");
+            labelTerminalStatus.setText("Stopping...");
             labelTerminalStatus.setForeground(Color.decode("#ff0000"));
         }
     }
@@ -458,27 +503,57 @@ public class MainActivity {
     private void reconnect() {
         logResponse("Retrying...");
         statusPanelUpdate(STATUS_RECONNECTING);
-        connectECR();
+        sleep(socketConnectTimeout);
+        if (canReconnect) {
+            connectECR();
+        }
     }
 
     private void stopECR() {
+        logResponse("Stopping...");
         canReconnect = false;
         StaticMemory.connectedTerminal = null;
-        ecrTerminal.closeConnection(1009, "STATUS_STOPPED");
-        ecrTerminal = null;
-        statusPanelUpdate(STATUS_DISCONNECTED);
+        statusPanelUpdate(STATUS_CLOSING);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ecrTerminal.closeConnection(1009, "STATUS_STOPPED");
+                ecrTerminal = null;
+                statusPanelUpdate(STATUS_DISCONNECTED);
+                logResponse("Connection stopped");
+            }
+        }).start();
+    }
+
+    private void sleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean isFormValidated() {
 
         if (!textFieldAddress.getText().contains("PP") && !InetAddressUtils.isIPv4Address(textFieldAddress.getText()) || textFieldAddress.getText().length() > 20) {
             showMessageDialog(frame, "Invalid IP address or device serial number!", "Error", ERROR_MESSAGE);
+            textFieldAddress.requestFocus();
+            return false;
+        } else if (textFieldPosName.getText().isEmpty()) {
+            showMessageDialog(frame, "Invalid POS/Host name!", "Error", ERROR_MESSAGE);
+            textFieldPosName.requestFocus();
             return false;
         } else if (!textFieldAuthCode.getText().isEmpty() && !textFieldAuthCode.getText().matches("-?\\d+(\\.\\d+)?") || textFieldAuthCode.getText().length() > 5) {
             showMessageDialog(frame, "Invalid ECR Auth Code!", "Error", ERROR_MESSAGE);
+            textFieldAuthCode.requestFocus();
+            return false;
+        } else if (textFieldAddress.getText().contains("PP") && textFieldAuthCode.getText().isEmpty()) {
+            showMessageDialog(frame, "Auth Code is required for external connections!", "Error", ERROR_MESSAGE);
+            textFieldAuthCode.requestFocus();
             return false;
         } else if (!textFieldCallbackPort.getText().isEmpty() && !textFieldCallbackPort.getText().matches("-?\\d+(\\.\\d+)?") || textFieldCallbackPort.getText().length() > 5) {
             showMessageDialog(frame, "Invalid Port number!", "Error", ERROR_MESSAGE);
+            textFieldCallbackPort.requestFocus();
             return false;
         }
 
@@ -494,6 +569,12 @@ public class MainActivity {
             StaticMemory.getPrefs().put("terminal", textFieldAddress.getText());
         } else {
             StaticMemory.getPrefs().remove("terminal");
+        }
+
+        if (!textFieldPosName.getText().isEmpty()) {
+            StaticMemory.getPrefs().put("pos_name", textFieldPosName.getText());
+        } else {
+            StaticMemory.getPrefs().remove("pos_name");
         }
 
         if (!textFieldAuthCode.getText().isEmpty()) {
@@ -529,7 +610,7 @@ public class MainActivity {
                     post.setEntity(new StringEntity(json));
                     CloseableHttpClient httpClient = HttpClients.createDefault();
                     CloseableHttpResponse response = httpClient.execute(post);
-                    logResponse(EntityUtils.toString(response.getEntity()));
+                    logResponse("sendPost: " + EntityUtils.toString(response.getEntity()));
                 } catch (UnsupportedEncodingException ex) {
                     ex.printStackTrace();
                     logResponse("sendPost-error: " + ex.getMessage());
@@ -556,7 +637,7 @@ public class MainActivity {
 
         JFrame frame = new JFrame("ECR Client - v1.1.1");
         frame.setContentPane(new MainActivity(frame).mainPanel);
-        frame.setSize(550, 450);
+        frame.setSize(550, 360);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

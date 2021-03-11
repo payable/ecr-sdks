@@ -1,4 +1,6 @@
 *
 !*.zip
 !.gitignore
+!screenshots
+!README.md
 !setup-win32.exe
