@@ -2,7 +2,7 @@
 
 ![](https://i.imgur.com/P8L2Oc7.png)
 
-ECR Client - [payable.github.io/ecr-sdks/ecr-client-java](https://payable.github.io/ecr-sdks/ecr-client-java)
+ECR Client - [payable.github.io/ecr-sdks/ecr-client-java/platforms/windows-xp-32](https://payable.github.io/ecr-sdks/ecr-client-java/platforms/windows-xp-32)
 
 ECR Client is the software which can help the POS/Host system to accept the payment requests using HTTP through TCP/IP port internally and externally.
 
