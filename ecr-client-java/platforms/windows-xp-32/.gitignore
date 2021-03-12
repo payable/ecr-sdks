@@ -3,5 +3,7 @@
 !.gitignore
 !screenshots
 !screenshots/*
+!certs
+!certs/*
 !README.md
 !setup-win32.exe
