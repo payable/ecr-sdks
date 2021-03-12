@@ -133,7 +133,7 @@ public class MainActivity {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(scrollPaneResponse.isVisible()) {
-                    frame.setSize(550, 360);
+                    frame.setSize(550, 350);
                     scrollPaneResponse.setVisible(false);
                 } else {
                     frame.setSize(550, 550);
@@ -642,7 +642,7 @@ public class MainActivity {
 
         JFrame frame = new JFrame("ECR Client - v1.1.1");
         frame.setContentPane(new MainActivity(frame).mainPanel);
-        frame.setSize(550, 360);
+        frame.setSize(550, 350);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
