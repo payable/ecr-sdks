@@ -76,6 +76,7 @@ public class MainActivity {
         String reconnectPref = StaticMemory.getPrefs().get("reconnect", "");
 
         scrollPaneResponse.setVisible(false);
+        scrollPaneResponse.setPreferredSize(new Dimension(scrollPaneResponse.getPreferredSize().width, 250));
         textFieldAddress.setText(StaticMemory.getPrefs().get("terminal", ""));
         textFieldPosName.setText(StaticMemory.getPrefs().get("pos_name", ""));
         textFieldAuthCode.setText(StaticMemory.getPrefs().get("auth_code", ""));
@@ -132,13 +133,12 @@ public class MainActivity {
         buttonShowHideLogs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(scrollPaneResponse.isVisible()) {
-                    frame.setSize(550, 350);
+                if (scrollPaneResponse.isVisible()) {
                     scrollPaneResponse.setVisible(false);
                 } else {
-                    frame.setSize(550, 550);
                     scrollPaneResponse.setVisible(true);
                 }
+                frame.pack();
             }
         });
 
@@ -642,7 +642,7 @@ public class MainActivity {
 
         JFrame frame = new JFrame("ECR Client - v1.1.1");
         frame.setContentPane(new MainActivity(frame).mainPanel);
-        frame.setSize(550, 350);
+        // frame.setSize(550, 350);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -652,5 +652,6 @@ public class MainActivity {
             ex.printStackTrace();
         }
         frame.setVisible(true);
+        frame.pack();
     }
 }
