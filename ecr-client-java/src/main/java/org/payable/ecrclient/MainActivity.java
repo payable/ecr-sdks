@@ -644,7 +644,6 @@ public class MainActivity {
         frame.setContentPane(new MainActivity(frame).mainPanel);
         // frame.setSize(550, 350);
         frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         try {
             frame.setIconImage(ImageIO.read(MainActivity.class.getResourceAsStream("/icon.png")));
@@ -653,5 +652,6 @@ public class MainActivity {
         }
         frame.setVisible(true);
         frame.pack();
+        frame.setLocationRelativeTo(null);
     }
 }
