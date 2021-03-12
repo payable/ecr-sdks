@@ -198,6 +198,18 @@ public class MainActivity {
 
     private void startTray() {
 
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                if (SystemTray.isSupported()) {
+                    frame.setState(ICONIFIED);
+                } else {
+                    ShellUtils.exec("adb kill-server");
+                    System.exit(0);
+                }
+            }
+        });
+
         if (!SystemTray.isSupported()) {
             System.out.println("SystemTray is not supported");
             return;
@@ -239,19 +251,6 @@ public class MainActivity {
                 if (e.getNewState() == ICONIFIED) {
                     // frame.setState(ICONIFIED);
                     // frame.setVisible(false);
-                }
-            }
-        });
-
-        frame.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                if (SystemTray.isSupported()) {
-                    frame.setState(ICONIFIED);
-                } else {
-                    frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-                    ShellUtils.exec("adb kill-server");
-                    System.exit(0);
                 }
             }
         });
