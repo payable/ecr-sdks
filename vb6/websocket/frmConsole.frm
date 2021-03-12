@@ -3,30 +3,38 @@ Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form formServer 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "WebSocket"
-   ClientHeight    =   4860
+   ClientHeight    =   6780
    ClientLeft      =   30
    ClientTop       =   300
    ClientWidth     =   6660
    LinkTopic       =   "frmConsole"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   4860
+   ScaleHeight     =   6780
    ScaleWidth      =   6660
    StartUpPosition =   2  'CenterScreen
+   Begin VB.TextBox TextAddress 
+      Height          =   375
+      Left            =   1080
+      TabIndex        =   8
+      Text            =   "192.168.1.16"
+      Top             =   1080
+      Width           =   3375
+   End
    Begin VB.CommandButton btnConnect 
       Caption         =   "Connect"
       Height          =   374
-      Left            =   1200
+      Left            =   4560
       TabIndex        =   7
-      Top             =   1440
+      Top             =   1080
       Width           =   979
    End
    Begin VB.TextBox TextRequest 
-      Height          =   375
-      Left            =   1200
+      Height          =   855
+      Left            =   1080
       TabIndex        =   4
       Text            =   "{""amount"":20,""endpoint"":""PAYMENT"",""method"":""CARD""}"
-      Top             =   960
+      Top             =   1680
       Width           =   5055
    End
    Begin MSWinsockLib.Winsock sckClient 
@@ -40,17 +48,17 @@ Begin VB.Form formServer
    Begin VB.CommandButton btnSend 
       Caption         =   "Send"
       Height          =   374
-      Left            =   2280
+      Left            =   2640
       TabIndex        =   1
-      Top             =   1440
-      Width           =   979
+      Top             =   2760
+      Width           =   1455
    End
    Begin VB.CommandButton cmdCloseConsole 
       Caption         =   "Close"
       Height          =   374
-      Left            =   3360
+      Left            =   5640
       TabIndex        =   0
-      Top             =   1440
+      Top             =   1080
       Width           =   979
    End
    Begin MSWinsockLib.Winsock sckServer 
@@ -67,15 +75,31 @@ Begin VB.Form formServer
       MultiLine       =   -1  'True
       ScrollBars      =   3  'Both
       TabIndex        =   6
-      Top             =   1920
+      Top             =   3240
       Width           =   6135
+   End
+   Begin VB.Label Label5 
+      Caption         =   "Response:"
+      Height          =   375
+      Left            =   240
+      TabIndex        =   10
+      Top             =   2880
+      Width           =   735
+   End
+   Begin VB.Label Label4 
+      Caption         =   "Address:"
+      Height          =   375
+      Left            =   240
+      TabIndex        =   9
+      Top             =   1080
+      Width           =   975
    End
    Begin VB.Label Label3 
       Caption         =   "Request:"
       Height          =   255
       Left            =   240
       TabIndex        =   5
-      Top             =   1035
+      Top             =   1920
       Width           =   735
    End
    Begin VB.Label Label2 
@@ -107,7 +131,7 @@ Attribute VB_Exposed = False
 Private Sub btnConnect_Click()
     sckClient.Close
     sckClient.LocalPort = 0
-    sckClient.Connect "192.168.1.16", 45454
+    sckClient.Connect TextAddress.Text, 45454
 End Sub
 
 Private Sub btnSend_Click()
