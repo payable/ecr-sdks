@@ -13,12 +13,20 @@ Begin VB.Form formServer
    ScaleHeight     =   6780
    ScaleWidth      =   6660
    StartUpPosition =   2  'CenterScreen
+   Begin VB.TextBox TextPosName 
+      Height          =   375
+      Left            =   1080
+      TabIndex        =   11
+      Text            =   "Cashier-VB"
+      Top             =   1080
+      Width           =   3375
+   End
    Begin VB.TextBox TextAddress 
       Height          =   375
       Left            =   1080
       TabIndex        =   8
       Text            =   "192.168.1.16"
-      Top             =   1080
+      Top             =   1680
       Width           =   3375
    End
    Begin VB.CommandButton btnConnect 
@@ -26,7 +34,7 @@ Begin VB.Form formServer
       Height          =   374
       Left            =   4560
       TabIndex        =   7
-      Top             =   1080
+      Top             =   1680
       Width           =   979
    End
    Begin VB.TextBox TextRequest 
@@ -34,7 +42,7 @@ Begin VB.Form formServer
       Left            =   1080
       TabIndex        =   4
       Text            =   "{""amount"":20,""endpoint"":""PAYMENT"",""method"":""CARD""}"
-      Top             =   1680
+      Top             =   2280
       Width           =   5055
    End
    Begin MSWinsockLib.Winsock sckClient 
@@ -50,7 +58,7 @@ Begin VB.Form formServer
       Height          =   374
       Left            =   2640
       TabIndex        =   1
-      Top             =   2760
+      Top             =   3240
       Width           =   1455
    End
    Begin VB.CommandButton cmdCloseConsole 
@@ -58,7 +66,7 @@ Begin VB.Form formServer
       Height          =   374
       Left            =   5640
       TabIndex        =   0
-      Top             =   1080
+      Top             =   1680
       Width           =   979
    End
    Begin MSWinsockLib.Winsock sckServer 
@@ -75,23 +83,31 @@ Begin VB.Form formServer
       MultiLine       =   -1  'True
       ScrollBars      =   3  'Both
       TabIndex        =   6
-      Top             =   3240
+      Top             =   3840
       Width           =   6135
+   End
+   Begin VB.Label Label6 
+      Caption         =   "POS Name:"
+      Height          =   375
+      Left            =   120
+      TabIndex        =   12
+      Top             =   1200
+      Width           =   1095
    End
    Begin VB.Label Label5 
       Caption         =   "Response:"
       Height          =   375
       Left            =   240
       TabIndex        =   10
-      Top             =   2880
+      Top             =   3480
       Width           =   735
    End
    Begin VB.Label Label4 
       Caption         =   "Address:"
       Height          =   375
-      Left            =   240
+      Left            =   120
       TabIndex        =   9
-      Top             =   1080
+      Top             =   1680
       Width           =   975
    End
    Begin VB.Label Label3 
@@ -99,7 +115,7 @@ Begin VB.Form formServer
       Height          =   255
       Left            =   240
       TabIndex        =   5
-      Top             =   1920
+      Top             =   2520
       Width           =   735
    End
    Begin VB.Label Label2 
@@ -157,7 +173,7 @@ End Sub
 Private Sub sckClient_Connect()
     Debug.Print "sckClient_Connect"
     Dim Packet As String
-    Packet = "GET /?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=COMPANY HTTP/1.1" & vbCrLf & _
+    Packet = "GET /?token=4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=&pos=" & TextPosName.Text & " HTTP/1.1" & vbCrLf & _
         "Upgrade: websocket" & vbCrLf & _
         "Connection: Upgrade" & vbCrLf & _
         "Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==" & vbCrLf & _
