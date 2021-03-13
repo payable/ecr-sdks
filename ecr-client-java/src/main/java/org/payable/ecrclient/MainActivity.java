@@ -1,7 +1,6 @@
 package org.payable.ecrclient;
 
 import com.google.gson.JsonSyntaxException;
-import com.sun.xml.internal.ws.util.StringUtils;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -16,6 +15,7 @@ import org.payable.ecr.PAYableRequest;
 import org.payable.ecr.PAYableResponse;
 import org.payable.ecrclient.services.MySocketWebServer;
 import org.payable.ecrclient.services.StaticMemory;
+import org.payable.ecrclient.services.StringUtils;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

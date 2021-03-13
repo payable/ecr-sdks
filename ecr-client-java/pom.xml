@@ -98,7 +98,7 @@
                     <configuration>
                         <archive>
                             <manifest>
-                                <mainClass>fully.qualified.MainClass</mainClass>
+                                <mainClass>org.payable.ecrclient.App</mainClass>
                             </manifest>
                         </archive>
                         <descriptorRefs>
