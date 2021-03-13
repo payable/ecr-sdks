@@ -371,7 +371,13 @@ public class MainActivity {
 
             ecrTerminalHashCode = ecrTerminal.hashCode();
             ecrTerminal.debug = true;
-            ecrTerminal.setConnectionLostTimeout(textFieldAddress.getText().contains("PP") ? 10 : 5);
+            if (textFieldAddress.getText().contains("PP")) {
+                ecrTerminal.setConnectionLostTimeout(10);
+            } else if (textFieldAddress.getText().contains("127.0.0.1")) {
+                ecrTerminal.setConnectionLostTimeout(5);
+            } else {
+                ecrTerminal.setConnectionLostTimeout(15);
+            }
             ecrTerminal.connect();
 
         } catch (Exception ex) {
