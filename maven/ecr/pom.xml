@@ -7,7 +7,7 @@
     <groupId>org.payable</groupId>
     <artifactId>ecr</artifactId>
     <packaging>jar</packaging>
-    <version>1.1</version>
+    <version>1.2</version>
     <name>ecr</name>
 
     <url>https://ecr-git-demo.payable.lk</url>
