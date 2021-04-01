@@ -52,7 +52,7 @@
                     <configuration>
                         <archive>
                             <manifest>
-                                <mainClass>fully.qualified.MainClass</mainClass>
+                                <mainClass>org.payable.ecr.demo.DemoInternal</mainClass>
                             </manifest>
                         </archive>
                         <descriptorRefs>
