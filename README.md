@@ -4,6 +4,8 @@
 
 ECR SDKs - [ecr-git-demo.payable.lk](https://ecr-git-demo.payable.lk/)
 
+PAYable ECR SDKs provide a bridge between PAYable terminals and any kind of POS platform without any language barriers to complete the PAYment transaction requests.
+
 <hr>
 
 ### Integration 
