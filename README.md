@@ -787,6 +787,19 @@ ECRTerminal ecrTerminal = new ECRTerminal("127.0.0.1", ...
 }
 ```
 
+### P2P (Wifi-Direct) ECR SDK
+
+Wi-Fi Direct (P2P) allows Android 4.0 (API level 14) and higher devices with the appropriate hardware to connect directly to each other via Wi-Fi without an intermediate access point.
+
+P2P library provides instant integration (PnP) support for WIFI-Direct P2P for any Android projects plus it remembers the recently connected device and reconnects it automatically when it's available.
+
+* No SSID Access Point is required
+* No need to connect to WIFI Network
+* Can be used while Mobile Data is turned on
+* Auto reconnects when the terminal is available nearby
+
+Refer the [P2P Documentation](https://aslamanver.github.io/p2p/demo-projects/demo-ecr) to know more about PAYable P2P Wi-Fi Direct implementation.
+
 Refer this repository to learn more.
 
 *PAYable ECR SDKs Integration*
